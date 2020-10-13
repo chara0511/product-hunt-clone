@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
 
-const StyledTitle = styled.h1`
+const StyledTitle = styled.div`
   color: red;
 `;
 
-const Home = () => {
+const About = () => {
   return (
     <Layout>
-      <StyledTitle>Home</StyledTitle>
+      <StyledTitle>About us</StyledTitle>
     </Layout>
   );
 };
 
-export default Home;
+export default About;
