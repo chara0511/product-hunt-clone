@@ -11,6 +11,7 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   width: 100%;
   min-height: 100%;

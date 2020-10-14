@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { SearchContext } from "../../context/search/searchContext";
 import { theme } from "../../styles";
 
 import { SearchIcon } from "../icons";
@@ -21,18 +22,24 @@ const StyledInput = styled.input`
   border: 1px solid ${colors.lavender};
   padding: 0px 10px 0px 32px;
   font-size: ${fontSizes.sm};
+  width: 100%;
 `;
 
 const Search = () => {
-  return (
-    <StyledForm>
-      <StyledInput
-        type="text"
-        placeholder="Discover your next favorite thing..."
-      />
+  const { enableModal } = useContext(SearchContext);
 
-      <SearchIcon />
-    </StyledForm>
+  return (
+    <>
+      <StyledForm>
+        <StyledInput
+          type="text"
+          placeholder="Discover your next favorite thing..."
+          onClick={() => enableModal()}
+        />
+
+        <SearchIcon />
+      </StyledForm>
+    </>
   );
 };
 

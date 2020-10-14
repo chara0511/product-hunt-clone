@@ -1,0 +1,2 @@
+export const ENABLE_MODAL = "ENABLE_MODAL";
+export const DISABLE_MODAL = "DISABLE_MODAL";
