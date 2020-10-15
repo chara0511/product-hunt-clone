@@ -17,9 +17,9 @@ const StyledHeader = styled.header`
   top: 0;
   height: 46px;
 
-  ${mixins.flexBetween}
+  box-shadow: ${theme.shadows.header};
 
-  ${mixins.boxShadow}
+  ${mixins.flexBetween}
 
   & .__logo {
     border-radius: 50%;

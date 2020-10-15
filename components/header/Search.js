@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
-import styled from "styled-components";
+import React, { useContext } from "react";
 import { SearchContext } from "../../context/search/searchContext";
-import { theme } from "../../styles";
 
+import styled from "styled-components";
 import { SearchIcon } from "../icons";
+
+import { media, theme } from "../../styles";
 
 const { colors, fontSizes } = theme;
 
@@ -22,7 +23,12 @@ const StyledInput = styled.input`
   border: 1px solid ${colors.lavender};
   padding: 0px 10px 0px 32px;
   font-size: ${fontSizes.sm};
+  width: 0;
+
+  ${media.mdTablet`
   width: 100%;
+
+  `}
 `;
 
 const Search = () => {
