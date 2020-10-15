@@ -1,12 +1,17 @@
 import React from "react";
-import Link from "next/link";
+import { MoreIcon } from "../icons";
+// import Link from "next/link";
 
 const Nav = () => {
   return (
     <nav>
-      <Link href="/">Home</Link>
+      {/* <Link href="/">Home</Link>
       <Link href="/">Popular</Link>
-      <Link href="/">New Product</Link>
+      <Link href="/">New Product</Link> */}
+
+      <button>
+        <MoreIcon />
+      </button>
     </nav>
   );
 };

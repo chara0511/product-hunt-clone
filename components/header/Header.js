@@ -5,26 +5,36 @@ import Nav from "./Nav";
 import Search from "./Search";
 
 import styled from "styled-components";
-import { mixins, theme } from "../../styles";
+import { mixins, StyledLink, theme } from "../../styles";
 import { Logo } from "../icons";
 
 const { colors } = theme;
 
 const StyledHeader = styled.header`
   background-color: ${colors.white};
-  padding: 13px;
+  padding: 13px 15px;
   position: sticky;
   top: 0;
+  height: 46px;
 
   ${mixins.flexBetween}
 
   ${mixins.boxShadow}
+
+  & .__logo {
+    border-radius: 50%;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const Header = () => {
   return (
     <StyledHeader>
-      <Logo />
+      <StyledLink className="__logo" href="/">
+        <Logo />
+      </StyledLink>
 
       <Search />
 

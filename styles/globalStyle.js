@@ -95,6 +95,7 @@ input,
 optgroup,
 select,
 textarea {
+  box-sizing: border-box;
   border: 0;
   border-radius: 0;
   font-family: inherit; /* 1 */
@@ -116,6 +117,7 @@ input { /* 1 */
 button,
 select { /* 1 */
   text-transform: none;
+  cursor: pointer;
 }
 
 button,
