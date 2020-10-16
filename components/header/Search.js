@@ -3,7 +3,7 @@ import { SearchContext } from "../../context/search/searchContext";
 import { CloseIcon, SearchIcon } from "../icons";
 
 import styled from "styled-components";
-import { media, mixins, theme } from "../../styles";
+import { media, theme } from "../../styles";
 
 import Link from "next/link";
 import { useOutsideModal } from "../../hooks/useOutsideModal";
@@ -15,8 +15,8 @@ const StyledForm = styled.form`
 
   & svg {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 5px;
+    left: 5px;
   }
 `;
 
@@ -44,7 +44,7 @@ const StyledContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const StyledFormActive = styled.form`
+const StyledContent = styled.div`
   padding: 13px 15px;
   text-align: center;
   position: relative;
@@ -52,15 +52,19 @@ const StyledFormActive = styled.form`
   height: 46px;
   font-size: ${fontSizes.sm};
 
-  & svg {
-    position: absolute;
-    top: 1.5em;
-    left: 1.5em;
-  }
-
-  ${mixins.boxShadow}
-
   z-index: 1;
+`;
+
+const StyledFormActive = styled.form`
+  margin: auto;
+  max-width: 1100px;
+  position: relative;
+`;
+
+const StyledIcon = styled.span`
+  position: absolute;
+  top: 8px;
+  left: 8px;
 `;
 
 const StyledInputActive = styled.input`
@@ -68,7 +72,6 @@ const StyledInputActive = styled.input`
   border-top: 1px solid ${colors.lavender};
   border-left: 1px solid ${colors.lavender};
   border-right: 1px solid ${colors.lavender};
-  max-width: 1440px;
   width: 100%;
   padding: 0 3em;
 `;
@@ -81,11 +84,10 @@ const StyledWrapper = styled.div`
   padding: 2em 3em;
 `;
 
-const StyledCloseButton = styled.button`
+const StyledButtonIcon = styled.button`
   position: absolute;
-  top: 1em;
-  right: 1em;
-  background-color: transparent;
+  top: 8px;
+  right: 8px;
 `;
 
 const Search = () => {
@@ -120,9 +122,11 @@ const Search = () => {
         </StyledForm>
       ) : (
         <StyledContainer>
-          <StyledFormActive>
-            <div ref={wrapperRef}>
-              <SearchIcon />
+          <StyledContent>
+            <StyledFormActive ref={wrapperRef}>
+              <StyledIcon>
+                <SearchIcon />
+              </StyledIcon>
 
               <StyledInputActive
                 type="text"
@@ -133,12 +137,12 @@ const Search = () => {
               <StyledWrapper>
                 <Link href="/about">Press enter to see all results </Link>
               </StyledWrapper>
-            </div>
-          </StyledFormActive>
 
-          <StyledCloseButton onClick={disableSearchMode}>
-            <CloseIcon />
-          </StyledCloseButton>
+              <StyledButtonIcon onClick={disableSearchMode}>
+                <CloseIcon />
+              </StyledButtonIcon>
+            </StyledFormActive>
+          </StyledContent>
         </StyledContainer>
       )}
     </>

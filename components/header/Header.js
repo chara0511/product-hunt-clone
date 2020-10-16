@@ -17,6 +17,12 @@ const StyledHeader = styled.header`
   top: 0;
   height: 46px;
   box-shadow: ${theme.shadows.header};
+`;
+
+const StyledContainer = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  width: 100%;
 
   ${mixins.flexBetween}
 
@@ -31,15 +37,17 @@ const StyledHeader = styled.header`
 const Header = () => {
   return (
     <StyledHeader>
-      <StyledLink className="__logo" href="/">
-        <Logo />
-      </StyledLink>
+      <StyledContainer>
+        <StyledLink className="__logo" href="/">
+          <Logo />
+        </StyledLink>
 
-      <Search />
+        <Search />
 
-      <Nav />
+        <Nav />
 
-      <Auth />
+        <Auth />
+      </StyledContainer>
     </StyledHeader>
   );
 };

@@ -116,6 +116,7 @@ textarea {
 button,
 input { /* 1 */
   overflow: visible;
+  background-color: transparent;
 }
 
 button,
