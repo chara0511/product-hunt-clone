@@ -4,7 +4,7 @@ import Header from "../header/Header";
 
 const StyledMain = styled.main`
   margin: 20px 0;
-  padding: 0 10px;
+  padding: 0 15px;
 `;
 
 const Layout = (props) => {

@@ -16,7 +16,6 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   height: 46px;
-
   box-shadow: ${theme.shadows.header};
 
   ${mixins.flexBetween}

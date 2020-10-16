@@ -46,6 +46,10 @@ pre {
 
 a {
   background-color: transparent;
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+  color: inherit;
+  position: relative;
 }
 
 abbr[title] {
@@ -199,6 +203,16 @@ summary {
 template {
   display: none;
 }
+
+ ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  li {
+      position: relative;
+    }
+  }
 
 [hidden] {
   display: none;

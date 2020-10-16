@@ -2,12 +2,25 @@ import { useReducer } from "react";
 import { SearchContext } from "../context/search/searchContext";
 import { SearchReducer } from "../context/search/searchReducer";
 import { GlobalStyle } from "../styles";
-import { ENABLE_MODAL, DISABLE_MODAL } from "../types";
+import {
+  ENABLE_MODAL,
+  DISABLE_MODAL,
+  ENABLE_SEARCH_MODE,
+  DISABLE_SEARCH_MODE,
+} from "../types";
 
 const MyApp = ({ Component, pageProps }) => {
-  const initialState = { modal: null };
+  const initialState = { searchMode: null, modal: null };
 
   const [state, dispatch] = useReducer(SearchReducer, initialState);
+
+  const enableSearchMode = () => {
+    dispatch({ type: ENABLE_SEARCH_MODE, payload: true });
+  };
+
+  const disableSearchMode = () => {
+    dispatch({ type: DISABLE_SEARCH_MODE, payload: false });
+  };
 
   const enableModal = () => {
     dispatch({ type: ENABLE_MODAL, payload: true });
@@ -22,7 +35,14 @@ const MyApp = ({ Component, pageProps }) => {
       <GlobalStyle />
 
       <SearchContext.Provider
-        value={{ modal: state.modal, enableModal, disableModal }}
+        value={{
+          searchMode: state.searchMode,
+          modal: state.modal,
+          enableModal,
+          disableModal,
+          enableSearchMode,
+          disableSearchMode,
+        }}
       >
         <Component {...pageProps} />
       </SearchContext.Provider>
