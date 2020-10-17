@@ -1,6 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import Head from "next/head";
 import Header from "../header/Header";
+
+import styled from "styled-components";
 
 const StyledMain = styled.main`
   margin: 20px 0;
@@ -10,7 +12,12 @@ const StyledMain = styled.main`
 const Layout = (props) => {
   return (
     <>
+      <Head>
+        <title>Product Hunt Clone</title>
+      </Head>
+
       <Header />
+
       <StyledMain>{props.children}</StyledMain>
     </>
   );

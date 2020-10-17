@@ -20,7 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: ${colors.whitesmoke};
   font-family: ${fonts.SegoeUI};
-  font-size: ${fontSizes.lg};
+  font-size: ${fontSizes.sm};
   color: ${colors.black}; 
 }
 
@@ -28,9 +28,13 @@ main {
   display: block;
 }
 
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
 }
 
 hr {

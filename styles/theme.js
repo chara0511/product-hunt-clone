@@ -26,9 +26,6 @@ const theme = {
     lg: "18px",
     xl: "24px",
     xxl: "45px",
-    h1: "144px",
-    h2: "64px",
-    h3: "36px",
   },
 
   borderRadius: "3px",

@@ -69,13 +69,13 @@ const Nav = () => {
         <StyledContainer ref={wrapperRef}>
           <ul>
             <li>
-              <Link href="/about">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="/about">Popular</Link>
+              <Link href="/popular">Popular</Link>
             </li>
             <li>
-              <Link href="/about">New Product</Link>
+              <Link href="/new-product">New Product</Link>
             </li>
           </ul>
         </StyledContainer>

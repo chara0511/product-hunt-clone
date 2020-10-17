@@ -123,7 +123,13 @@ const Search = () => {
       ) : (
         <StyledContainer>
           <StyledContent>
-            <StyledFormActive ref={wrapperRef}>
+            <StyledFormActive
+              ref={wrapperRef}
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log("submitted");
+              }}
+            >
               <StyledIcon>
                 <SearchIcon />
               </StyledIcon>

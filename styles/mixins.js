@@ -20,25 +20,30 @@ const mixins = {
     outline: 1px solid red;
   `,
 
-  // link: css`
-  //   display: inline-block;
-  //   text-decoration: none;
-  //   text-decoration-skip-ink: auto;
-  //   color: inherit;
-  //   position: relative;
-  //   transition: ${theme.transition};
-  //   cursor: pointer;
-  //   &:hover,
-  //   &:active,
-  //   &:focus {
-  //     color: ${colors.green};
-  //     outline: 0;
-  //   }
-  // `,
+  link: css`
+    display: inline-block;
+    text-decoration-skip-ink: auto;
+    position: relative;
+    transition: ${theme.transition};
+    cursor: pointer;
+    background-color: ${colors.chocolate};
+    color: ${colors.white};
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 16px;
+    font-size: ${fontSizes.xs};
+    width: 100%;
+    padding: 1em 0;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: ${colors.firebrick};
+      color: ${colors.green};
+    }
+  `,
 
   smallButton: css`
-    color: ${colors.black};
-    background-color: transparent;
     border: 1px solid ${colors.lavender};
     border-radius: ${theme.borderRadius};
     margin-left: 0.5em;
