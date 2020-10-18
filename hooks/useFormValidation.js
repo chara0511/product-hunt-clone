@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-export const useFormValidation = ({ initialState, validate, callback }) => {
+export const useFormValidation = (initialState, validateFn, successFn) => {
   const [values, setValues] = useState(initialState);
 
   const [errors, setErrors] = useState({});
@@ -12,12 +12,12 @@ export const useFormValidation = ({ initialState, validate, callback }) => {
       const noErrors = Object.keys(errors).length === 0;
 
       if (noErrors) {
-        callback();
+        successFn();
       }
 
       setSubmit(false);
     }
-  }, []);
+  }, [errors]);
 
   const handleChange = ({ target }) => {
     setValues({ ...values, [target.name]: target.value });
@@ -26,7 +26,7 @@ export const useFormValidation = ({ initialState, validate, callback }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setErrors(validate(values));
+    setErrors(validateFn(values));
 
     setSubmit(true);
   };

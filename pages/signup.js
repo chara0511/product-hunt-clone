@@ -1,6 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import Layout from "../components/layout/Layout";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { validateSignup } from "../validations/validateSignup";
+
+import styled from "styled-components";
 import { StyledForm, StyledWrapper, mixins } from "../styles/";
 
 const StyledInput = styled.input`
@@ -12,14 +15,32 @@ const StyledTitle = styled.h1`
   padding: 1.25em 0;
 `;
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+};
+
+const successSignup = () => {
+  console.log("acc created");
+};
+
 const Signup = () => {
+  const {
+    values: { name, email, password },
+    errors,
+    submit,
+    handleChange,
+    handleSubmit,
+  } = useFormValidation(initialState, validateSignup, successSignup);
+
   return (
     <div>
       <Layout>
         <>
           <StyledTitle>Sign up on Product Hunt</StyledTitle>
 
-          <StyledForm>
+          <StyledForm onSubmit={handleSubmit} noValidate>
             <StyledWrapper>
               <label htmlFor="name">Name: </label>
               <input
@@ -27,6 +48,8 @@ const Signup = () => {
                 id="name"
                 placeholder="Enter your name"
                 name="name"
+                value={name}
+                onChange={handleChange}
               />
             </StyledWrapper>
 
@@ -37,6 +60,8 @@ const Signup = () => {
                 id="email"
                 placeholder="Enter your email"
                 name="email"
+                value={email}
+                onChange={handleChange}
               />
             </StyledWrapper>
 
@@ -47,6 +72,8 @@ const Signup = () => {
                 id="password"
                 placeholder="Enter your password"
                 name="password"
+                value={password}
+                onChange={handleChange}
               />
             </StyledWrapper>
 
