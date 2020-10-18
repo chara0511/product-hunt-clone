@@ -99,7 +99,7 @@ const Search = () => {
 
   useEffect(() => {
     if (searchMode) {
-      return ref.current?.focus();
+      ref.current?.focus();
     }
   }, [searchMode]);
 
@@ -143,6 +143,8 @@ const Search = () => {
               <StyledWrapper>
                 <Link href="/about">Press enter to see all results </Link>
               </StyledWrapper>
+
+              {/* <input type="submit" value="do it" /> */}
 
               <StyledButtonIcon onClick={disableSearchMode}>
                 <CloseIcon />
