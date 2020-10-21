@@ -23,6 +23,10 @@ export const useFormValidation = (initialState, validateFn, successFn) => {
     setValues({ ...values, [target.name]: target.value });
   };
 
+  const handleBlur = () => {
+    setErrors(validateFn(values));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -34,8 +38,8 @@ export const useFormValidation = (initialState, validateFn, successFn) => {
   return {
     values,
     errors,
-    submit,
     handleChange,
+    handleBlur,
     handleSubmit,
   };
 };

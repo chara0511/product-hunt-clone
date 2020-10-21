@@ -4,15 +4,17 @@ import { useFormValidation } from "../hooks/useFormValidation";
 import { validateSignup } from "../validations/validateSignup";
 
 import styled from "styled-components";
-import { StyledForm, StyledWrapper, mixins } from "../styles/";
+import {
+  StyledTitle,
+  StyledForm,
+  StyledWrapper,
+  StyledErrorMessage,
+} from "../styles/StyledAuth";
+import { mixins } from "../styles/";
+import { ErrorIcon } from "../components/icons";
 
 const StyledInput = styled.input`
   ${mixins.link}
-`;
-
-const StyledTitle = styled.h1`
-  text-align: center;
-  padding: 1.25em 0;
 `;
 
 const initialState = {
@@ -29,8 +31,8 @@ const Signup = () => {
   const {
     values: { name, email, password },
     errors,
-    submit,
     handleChange,
+    handleBlur,
     handleSubmit,
   } = useFormValidation(initialState, validateSignup, successSignup);
 
@@ -50,7 +52,16 @@ const Signup = () => {
                 name="name"
                 value={name}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
+
+              {errors.name && (
+                <StyledErrorMessage>
+                  <ErrorIcon />
+
+                  {errors.name}
+                </StyledErrorMessage>
+              )}
             </StyledWrapper>
 
             <StyledWrapper>
@@ -62,7 +73,16 @@ const Signup = () => {
                 name="email"
                 value={email}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
+
+              {errors.email && (
+                <StyledErrorMessage>
+                  <ErrorIcon />
+
+                  {errors.email}
+                </StyledErrorMessage>
+              )}
             </StyledWrapper>
 
             <StyledWrapper>
@@ -74,7 +94,16 @@ const Signup = () => {
                 name="password"
                 value={password}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
+
+              {errors.password && (
+                <StyledErrorMessage>
+                  <ErrorIcon />
+
+                  {errors.password}
+                </StyledErrorMessage>
+              )}
             </StyledWrapper>
 
             <StyledInput type="submit" value="Sign up" />
