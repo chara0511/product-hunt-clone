@@ -19,8 +19,6 @@ const MyApp = ({ Component, pageProps }) => {
 
   const user = useAuth();
 
-  console.log(user);
-
   const enableSearchMode = () => {
     dispatch({ type: ENABLE_SEARCH_MODE, payload: true });
   };
@@ -41,7 +39,7 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <GlobalStyle />
 
-      <FirebaseContext.Provider value={{ firebase }}>
+      <FirebaseContext.Provider value={{ firebase, user }}>
         <SearchContext.Provider
           value={{
             searchMode: state.searchMode,

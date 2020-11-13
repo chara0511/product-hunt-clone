@@ -7,6 +7,7 @@ import { MoreIcon } from "../icons";
 
 import styled from "styled-components";
 import { theme } from "../../styles";
+import FirebaseContext from "../../context/firebase/FirebaseContext";
 
 const { colors, fontSizes } = theme;
 
@@ -54,6 +55,7 @@ const StyledContainer = styled.div`
 
 const Nav = () => {
   const { modal, enableModal } = useContext(SearchContext);
+  const { user } = useContext(FirebaseContext);
 
   const wrapperRef = useRef(null);
 
@@ -74,9 +76,11 @@ const Nav = () => {
             <li>
               <Link href="/popular">Popular</Link>
             </li>
-            <li>
-              <Link href="/new-product">New Product</Link>
-            </li>
+            {user && (
+              <li>
+                <Link href="/new-product">New Product</Link>
+              </li>
+            )}
           </ul>
         </StyledContainer>
       )}
