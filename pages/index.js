@@ -7,7 +7,6 @@ const StyledTitle = styled.h1`
 `;
 
 const Home = () => {
-  console.log("main");
   return (
     <Layout>
       <StyledTitle>Home</StyledTitle>

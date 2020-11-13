@@ -1,21 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { validateSignup } from "../validations/validateSignup";
-
-import styled from "styled-components";
+import firebase from "../firebase";
+import Router from "next/router";
+import { ErrorIcon } from "../components/icons";
 import {
   StyledTitle,
   StyledForm,
   StyledWrapper,
   StyledErrorMessage,
+  StyledInput,
 } from "../styles/StyledAuth";
-import { mixins } from "../styles/";
-import { ErrorIcon } from "../components/icons";
-
-const StyledInput = styled.input`
-  ${mixins.link}
-`;
 
 const initialState = {
   name: "",
@@ -23,11 +19,19 @@ const initialState = {
   password: "",
 };
 
-const successSignup = () => {
-  console.log("acc created");
-};
-
 const Signup = () => {
+  const [error, setError] = useState(null);
+
+  const successSignup = async () => {
+    try {
+      await firebase.signup(name, email, password);
+
+      Router.push("/");
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   const {
     values: { name, email, password },
     errors,
@@ -106,7 +110,11 @@ const Signup = () => {
               )}
             </StyledWrapper>
 
-            <StyledInput type="submit" value="Sign up" />
+            <StyledWrapper>
+              <StyledInput type="submit" value="Sign up" />
+            </StyledWrapper>
+
+            {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
           </StyledForm>
         </>
       </Layout>

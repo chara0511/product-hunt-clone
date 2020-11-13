@@ -42,6 +42,10 @@ export const StyledWrapper = styled.div`
   ${mixins.flexCenter}
 `;
 
+export const StyledInput = styled.input`
+  ${mixins.link}
+`;
+
 export const StyledErrorMessage = styled.div`
   left: 120px;
   bottom: 0;

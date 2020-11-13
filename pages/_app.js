@@ -1,6 +1,9 @@
 import { useReducer } from "react";
+import FirebaseContext from "../context/firebase/FirebaseContext";
 import { SearchContext } from "../context/search/searchContext";
 import { SearchReducer } from "../context/search/searchReducer";
+import firebase from "../firebase";
+import useAuth from "../hooks/useAuth";
 import { GlobalStyle } from "../styles";
 import {
   ENABLE_MODAL,
@@ -13,6 +16,10 @@ const MyApp = ({ Component, pageProps }) => {
   const initialState = { searchMode: null, modal: null };
 
   const [state, dispatch] = useReducer(SearchReducer, initialState);
+
+  const user = useAuth();
+
+  console.log(user);
 
   const enableSearchMode = () => {
     dispatch({ type: ENABLE_SEARCH_MODE, payload: true });
@@ -34,18 +41,20 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <GlobalStyle />
 
-      <SearchContext.Provider
-        value={{
-          searchMode: state.searchMode,
-          modal: state.modal,
-          enableModal,
-          disableModal,
-          enableSearchMode,
-          disableSearchMode,
-        }}
-      >
-        <Component {...pageProps} />
-      </SearchContext.Provider>
+      <FirebaseContext.Provider value={{ firebase }}>
+        <SearchContext.Provider
+          value={{
+            searchMode: state.searchMode,
+            modal: state.modal,
+            enableModal,
+            disableModal,
+            enableSearchMode,
+            disableSearchMode,
+          }}
+        >
+          <Component {...pageProps} />
+        </SearchContext.Provider>
+      </FirebaseContext.Provider>
     </>
   );
 };
