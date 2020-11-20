@@ -13,7 +13,7 @@ import {
 } from "../types";
 
 const MyApp = ({ Component, pageProps }) => {
-  const initialState = { searchMode: null, modal: null };
+  const initialState = { productos: [], searchMode: null, modal: null };
 
   const [state, dispatch] = useReducer(SearchReducer, initialState);
 
