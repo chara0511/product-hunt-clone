@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import Layout from "../components/layout/Layout";
 
 import { Router, useRouter } from "next/router";
+import FirebaseContext from "../context/firebase/FirebaseContext";
+import FileUploader from "react-firebase-file-uploader";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { validateNewProduct } from "../validations/validateNewProduct";
 import {
@@ -12,7 +14,6 @@ import {
   StyledWrapper,
 } from "../styles/StyledProduct";
 import { ErrorIcon } from "../components/icons";
-import FirebaseContext from "../context/firebase/FirebaseContext";
 
 const initialState = {
   name: "",
@@ -26,6 +27,10 @@ const NewProduct = () => {
   const { user, firebase } = useContext(FirebaseContext);
 
   const [error, setError] = useState(null);
+  const [nameImage, setNameImage] = useState("");
+  const [uploadImage, setUploadImage] = useState(false);
+  const [progressImage, setProgressImage] = useState(0);
+  const [urlImage, setUrlImage] = useState("");
 
   const router = useRouter();
 
@@ -38,6 +43,7 @@ const NewProduct = () => {
       name,
       company,
       url,
+      urlImage,
       description,
       votes: 0,
       comments: [],
@@ -45,6 +51,8 @@ const NewProduct = () => {
     };
 
     firebase.db.collection("products").add(product);
+
+    return router.push("/");
   };
 
   const {
@@ -54,6 +62,33 @@ const NewProduct = () => {
     handleBlur,
     handleSubmit,
   } = useFormValidation(initialState, validateNewProduct, successLogin);
+
+  const handleUploadStart = () => {
+    setProgressImage(0);
+    setUploadImage(true);
+  };
+
+  const handleProgress = (progress) => setProgressImage({ progress });
+
+  const handleUploadError = (error) => {
+    setProgressImage(error);
+    console.log(error);
+  };
+
+  const handleUploadSuccess = (name) => {
+    setProgressImage(100);
+    setUploadImage(false);
+    setNameImage(name);
+
+    firebase.storage
+      .ref("products")
+      .child(name)
+      .getDownloadURL()
+      .then((url) => {
+        console.log(url);
+        setUrlImage(url);
+      });
+  };
 
   return (
     <div>
@@ -106,25 +141,20 @@ const NewProduct = () => {
               )}
             </StyledWrapper>
 
-            {/* <StyledWrapper>
+            <StyledWrapper>
               <label htmlFor="image">Image:</label>
-              <input
-                type="file"
+              <FileUploader
+                accept="image/*"
                 id="image"
                 name="image"
-                value={image}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                randomizeFilename
+                storageRef={firebase.storage.ref("products")}
+                onUploadStart={handleUploadStart}
+                onUploadError={handleUploadError}
+                onUploadSuccess={handleUploadSuccess}
+                onProgress={handleProgress}
               />
-
-              {errors.image && (
-                <StyledErrorMessage>
-                  <ErrorIcon />
-
-                  {errors.image}
-                </StyledErrorMessage>
-              )}
-            </StyledWrapper> */}
+            </StyledWrapper>
 
             <StyledWrapper>
               <label htmlFor="url">URL:</label>
