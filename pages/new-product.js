@@ -1,7 +1,7 @@
-import { Router } from "next/router";
-import React, { useState } from "react";
-import { ErrorIcon } from "../components/icons";
+import React, { useContext, useState } from "react";
 import Layout from "../components/layout/Layout";
+
+import { Router, useRouter } from "next/router";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { validateNewProduct } from "../validations/validateNewProduct";
 import {
@@ -11,6 +11,8 @@ import {
   StyledTitle,
   StyledWrapper,
 } from "../styles/StyledProduct";
+import { ErrorIcon } from "../components/icons";
+import FirebaseContext from "../context/firebase/FirebaseContext";
 
 const initialState = {
   name: "",
@@ -21,9 +23,29 @@ const initialState = {
 };
 
 const NewProduct = () => {
+  const { user, firebase } = useContext(FirebaseContext);
+
   const [error, setError] = useState(null);
 
-  const successLogin = async () => {};
+  const router = useRouter();
+
+  const successLogin = async () => {
+    if (!user) {
+      return router.push("/login");
+    }
+
+    const product = {
+      name,
+      company,
+      url,
+      description,
+      votes: 0,
+      comments: [],
+      created: Date.now(),
+    };
+
+    firebase.db.collection("products").add(product);
+  };
 
   const {
     values: { name, company, image, url, description },
