@@ -2,6 +2,7 @@ import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import styled from "styled-components";
 import Comment from "../icons/Comment";
+import Link from "next/link";
 import {
   StyledContent,
   StyledProductDetails,
@@ -17,6 +18,7 @@ const StyledImage = styled.img`
 
 const ProductDetails = ({
   product: {
+    id,
     comments,
     company,
     created,
@@ -27,6 +29,7 @@ const ProductDetails = ({
     votes,
   },
 }) => {
+  console.log(id);
   return (
     <StyledProductDetails>
       <StyledContent>
@@ -36,7 +39,9 @@ const ProductDetails = ({
 
         <StyledWrapper>
           <StyledDescription>
-            <h2>{name}</h2>
+            <Link href="products/[id]" as={`/products/${id}`}>
+              <h2>{name}</h2>
+            </Link>
             <p>{description}</p>
           </StyledDescription>
 
