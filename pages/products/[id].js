@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { formatDistanceToNow } from 'date-fns';
 import FirebaseContext from '../../context/firebase/FirebaseContext';
-import Error404 from '../../components/layout/404';
 import Layout from '../../components/layout/Layout';
+import Error404 from '../../components/layout/404';
 
 const Product = () => {
-  const { firebase } = useContext(FirebaseContext);
+  const { firebase, user } = useContext(FirebaseContext);
 
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
@@ -31,12 +31,38 @@ const Product = () => {
     if (id) {
       getProduct(id);
     }
-  }, [id]);
+  }, [id, product]);
 
-  const { comments, created, description, name, urlImage } = product;
-  // company
-  // url;
-  // votes;
+  const {
+    comments,
+    company,
+    created,
+    description,
+    name,
+    owner,
+    url,
+    urlImage,
+    votes,
+    voted,
+  } = product;
+
+  const handleVote = () => {
+    if (!user) {
+      return router.push('/login');
+    }
+
+    const newVotes = votes + 1;
+
+    if (voted.includes(owner.uid)) {
+      return null;
+    }
+
+    const userVoted = [...voted, owner.uid];
+
+    firebase.db.collection('products').doc(id).update({ votes: newVotes, voted: userVoted });
+
+    return setProduct({ ...product, votes: newVotes });
+  };
 
   return (
     <Layout>
@@ -48,7 +74,11 @@ const Product = () => {
           <div>
             <div>
               <p>
-                Posted
+                Posted by
+                {owner.displayName}
+                {`, `}
+                {company}
+                {` - `}
                 {formatDistanceToNow(created)}
                 ago.
               </p>
@@ -57,14 +87,18 @@ const Product = () => {
 
               <p>{description}</p>
 
-              <form>
-                <input type="text" name="message" />
-                <input type="submit" value="Add comment" />
-              </form>
+              {user && (
+                <form>
+                  <h3>Comment</h3>
 
-              <h2>Comments</h2>
+                  <input type="text" name="message" placeholder="Write a comment" />
+                  <input type="submit" value="Done" />
+                </form>
+              )}
 
               <ul>
+                <h3>Comments</h3>
+
                 {comments.map((comment) => (
                   <li>
                     <p>{comment.name}</p>
@@ -73,7 +107,23 @@ const Product = () => {
                 ))}
               </ul>
             </div>
-            <aside />
+
+            <aside>
+              <a target="_blank" rel="noreferrer" href={url}>
+                Visit url
+              </a>
+
+              <p>
+                {votes}
+                Votes
+              </p>
+
+              {user && (
+                <button type="button" onClick={handleVote}>
+                  Vote
+                </button>
+              )}
+            </aside>
           </div>
         </div>
       )}

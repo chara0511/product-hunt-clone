@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { theme } from '.';
-import media from './media';
 import mixins from './mixins';
 
 const { colors } = theme;
@@ -19,27 +18,20 @@ export const StyledForm = styled.form`
 export const StyledWrapper = styled.div`
   height: 5em;
   position: relative;
+  margin: 0.5em 0;
 
-  label {
-    flex: 0 0 120px;
-
-    ${media.mdTablet`
-      flex: 0 0 150px;
-    `}
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.5em 2.4em;
+    line-height: 18px;
   }
 
-  input[type='text'],
-  input[type='email'],
-  input[type='password'] {
-    flex: 1;
-    padding: 0.5em;
+  input[type='submit'] {
+    display: block;
+    width: 100px;
+    margin: auto;
   }
-
-  &:last-of-type {
-    margin-bottom: 2em;
-  }
-
-  ${mixins.flexCenter}
 `;
 
 export const StyledInput = styled.input`
@@ -47,8 +39,7 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledErrorMessage = styled.div`
-  left: 120px;
-  bottom: 0;
+  left: 0.5em;
   position: absolute;
   color: ${colors.firebrick};
   display: flex;
@@ -60,8 +51,4 @@ export const StyledErrorMessage = styled.div`
     margin-right: 5px;
     fill: ${colors.firebrick};
   }
-
-  ${media.mdTablet`
-      left: 150px;
-  `}
 `;

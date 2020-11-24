@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import FileUploader from 'react-firebase-file-uploader';
-import Layout from '../components/layout/Layout';
-
 import FirebaseContext from '../context/firebase/FirebaseContext';
 import { useFormValidation } from '../hooks/useFormValidation';
 import { validateNewProduct } from '../validations/validateNewProduct';
+import Layout from '../components/layout/Layout';
+import Error404 from '../components/layout/404';
 import { ErrorIcon } from '../components/icons';
 import {
   StyledErrorMessage,
@@ -46,14 +46,16 @@ const NewProduct = () => {
     }
 
     const product = {
-      name,
+      comments: [],
       company,
+      created: Date.now(),
+      description,
+      name,
+      owner: { uid: user.uid, displayName: user.displayName },
       url,
       urlImage,
-      description,
       votes: 0,
-      comments: [],
-      created: Date.now(),
+      voted: [],
     };
 
     firebase.db.collection('products').add(product);
@@ -90,132 +92,140 @@ const NewProduct = () => {
   return (
     <div>
       <Layout>
-        <StyledTitle>New Product</StyledTitle>
+        {!user ? (
+          <Error404 />
+        ) : (
+          <>
+            <StyledTitle>New Product</StyledTitle>
 
-        <StyledForm onSubmit={handleSubmit} noValidate>
-          <fieldset>
-            <legend>Main Information</legend>
+            <StyledForm onSubmit={handleSubmit} noValidate>
+              <fieldset>
+                <legend>Main Information</legend>
 
-            <StyledWrapper>
-              <label htmlFor="name">
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Enter product name"
-                  name="name"
-                  value={name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </label>
+                <StyledWrapper>
+                  <label htmlFor="name">
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="Enter product name"
+                      name="name"
+                      value={name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </label>
 
-              {errors.name && (
-                <StyledErrorMessage>
-                  <ErrorIcon />
+                  {errors.name && (
+                    <StyledErrorMessage>
+                      <ErrorIcon />
 
-                  {errors.name}
-                </StyledErrorMessage>
-              )}
-            </StyledWrapper>
+                      {errors.name}
+                    </StyledErrorMessage>
+                  )}
+                </StyledWrapper>
 
-            <StyledWrapper>
-              <label htmlFor="company">
-                <input
-                  type="text"
-                  id="company"
-                  placeholder="Enter your company"
-                  name="company"
-                  value={company}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </label>
+                <StyledWrapper>
+                  <label htmlFor="company">
+                    <input
+                      type="text"
+                      id="company"
+                      placeholder="Enter your company"
+                      name="company"
+                      value={company}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </label>
 
-              {errors.company && (
-                <StyledErrorMessage>
-                  <ErrorIcon />
+                  {errors.company && (
+                    <StyledErrorMessage>
+                      <ErrorIcon />
 
-                  {errors.company}
-                </StyledErrorMessage>
-              )}
-            </StyledWrapper>
+                      {errors.company}
+                    </StyledErrorMessage>
+                  )}
+                </StyledWrapper>
 
-            <StyledWrapper>
-              <FileUploader
-                accept="image/*"
-                randomizeFilename
-                storageRef={firebase.storage.ref('products')}
-                onUploadStart={handleUploadStart}
-                onUploadError={handleUploadError}
-                onUploadSuccess={handleUploadSuccess}
-                onProgress={handleProgress}
-              />
+                <StyledWrapper>
+                  <FileUploader
+                    accept="image/*"
+                    randomizeFilename
+                    storageRef={firebase.storage.ref('products')}
+                    onUploadStart={handleUploadStart}
+                    onUploadError={handleUploadError}
+                    onUploadSuccess={handleUploadSuccess}
+                    onProgress={handleProgress}
+                  />
 
-              {uploadImage ? (
-                <p>
-                  Uploading
-                  {progressImage.progress}
-                </p>
-              ) : (
-                nameImage !== '' && <p>uploaded</p>
-              )}
-            </StyledWrapper>
+                  {uploadImage ? (
+                    <p>
+                      Uploading
+                      {` `}
+                      {progressImage.progress}
+                      {` %.`}
+                    </p>
+                  ) : (
+                    nameImage !== '' && <p>Uploaded.</p>
+                  )}
+                </StyledWrapper>
 
-            <StyledWrapper>
-              <label htmlFor="url">
-                <input
-                  type="url"
-                  id="url"
-                  placeholder="Enter a valid url"
-                  name="url"
-                  value={url}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </label>
+                <StyledWrapper>
+                  <label htmlFor="url">
+                    <input
+                      type="url"
+                      id="url"
+                      placeholder="Enter a valid url"
+                      name="url"
+                      value={url}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </label>
 
-              {errors.url && (
-                <StyledErrorMessage>
-                  <ErrorIcon />
+                  {errors.url && (
+                    <StyledErrorMessage>
+                      <ErrorIcon />
 
-                  {errors.url}
-                </StyledErrorMessage>
-              )}
-            </StyledWrapper>
-          </fieldset>
+                      {errors.url}
+                    </StyledErrorMessage>
+                  )}
+                </StyledWrapper>
+              </fieldset>
 
-          <fieldset>
-            <legend>Product information</legend>
+              <fieldset>
+                <legend>Product information</legend>
 
-            <StyledWrapper>
-              <label htmlFor="description">
-                <textarea
-                  id="description"
-                  placeholder="Enter a producto description"
-                  rows="3"
-                  name="description"
-                  value={description}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </label>
+                <StyledWrapper>
+                  <label htmlFor="description">
+                    <textarea
+                      id="description"
+                      placeholder="Enter a producto description"
+                      rows="3"
+                      name="description"
+                      value={description}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </label>
 
-              {errors.description && (
-                <StyledErrorMessage>
-                  <ErrorIcon />
+                  {errors.description && (
+                    <StyledErrorMessage>
+                      <ErrorIcon />
 
-                  {errors.description}
-                </StyledErrorMessage>
-              )}
-            </StyledWrapper>
-          </fieldset>
+                      {errors.description}
+                    </StyledErrorMessage>
+                  )}
+                </StyledWrapper>
+              </fieldset>
 
-          <StyledWrapper>
-            <StyledInput type="submit" value="Create Product" />
-          </StyledWrapper>
+              <StyledWrapper>
+                <StyledInput type="submit" value="Create Product" />
+              </StyledWrapper>
 
-          {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
-        </StyledForm>
+              {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
+            </StyledForm>
+          </>
+        )}
       </Layout>
     </div>
   );

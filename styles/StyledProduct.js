@@ -17,6 +17,11 @@ export const StyledForm = styled.form`
 
   & fieldset {
     border: 1px solid #e1e1e1;
+
+    &:last-of-type {
+      height: 110px;
+      margin: 0.5em 0;
+    }
   }
 `;
 
@@ -24,23 +29,13 @@ export const StyledWrapper = styled.div`
   height: 5em;
   position: relative;
 
-  & label {
-    flex: 0 0 120px;
-
-    ${media.mdTablet`
-      flex: 0 0 150px;
-    `}
-  }
-
-  & input[type='text'],
-  & input[type='email'],
-  & input[type='password'],
+  & input,
   & textarea {
-    flex: 1;
+    display: block;
+    width: 100%;
     padding: 0.5em;
+    line-height: 18px;
   }
-
-  ${mixins.flexLeft}
 `;
 
 export const StyledInput = styled.input`
@@ -48,8 +43,6 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledErrorMessage = styled.div`
-  left: 120px;
-  bottom: 0;
   position: absolute;
   color: ${colors.firebrick};
   display: flex;
