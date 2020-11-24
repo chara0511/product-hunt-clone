@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import Auth from "./Auth";
-import Nav from "./Nav";
-import Search from "./Search";
+import styled from 'styled-components';
+import Auth from './Auth';
+import Nav from './Nav';
+import Search from './Search';
 
-import styled from "styled-components";
-import { mixins, StyledLink, theme } from "../../styles";
-import { Logo } from "../icons";
+import { mixins, StyledLink, theme } from '../../styles';
+import { Logo } from '../icons';
 
 const { colors } = theme;
 

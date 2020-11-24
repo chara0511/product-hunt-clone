@@ -1,22 +1,22 @@
 export const validateNewProduct = (values) => {
-  let errors = {};
+  const errors = {};
 
   if (!values.name) {
-    errors.name = "Name is required.";
+    errors.name = 'Name is required.';
   }
 
   if (!values.company) {
-    errors.company = "Company name is required.";
+    errors.company = 'Company name is required.';
   }
 
   if (!values.url) {
-    errors.url = "URL is required";
+    errors.url = 'URL is required';
   } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(values.url)) {
-    errors.url = "URL not valid";
+    errors.url = 'URL not valid';
   }
 
   if (!values.description) {
-    errors.description = "Product description is required";
+    errors.description = 'Product description is required';
   }
 
   return errors;

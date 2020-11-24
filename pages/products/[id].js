@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import FirebaseContext from "../../context/firebase/FirebaseContext";
-import Error404 from "../../components/layout/404";
-import Layout from "../../components/layout/Layout";
-import { formatDistanceToNow, lightFormat } from "date-fns";
+import React, { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { formatDistanceToNow } from 'date-fns';
+import FirebaseContext from '../../context/firebase/FirebaseContext';
+import Error404 from '../../components/layout/404';
+import Layout from '../../components/layout/Layout';
 
 const Product = () => {
   const { firebase } = useContext(FirebaseContext);
@@ -17,8 +17,8 @@ const Product = () => {
     query: { id },
   } = router;
 
-  const getProduct = async (id) => {
-    const query = await firebase.db.collection("products").doc(id).get();
+  const getProduct = async (productId) => {
+    const query = await firebase.db.collection('products').doc(productId).get();
 
     if (query.exists) {
       setProduct(query.data());
@@ -33,16 +33,10 @@ const Product = () => {
     }
   }, [id]);
 
-  const {
-    comments,
-    company,
-    created,
-    description,
-    name,
-    url,
-    urlImage,
-    votes,
-  } = product;
+  const { comments, created, description, name, urlImage } = product;
+  // company
+  // url;
+  // votes;
 
   return (
     <Layout>
@@ -53,9 +47,13 @@ const Product = () => {
           <h1>{name}</h1>
           <div>
             <div>
-              <p>Posted {formatDistanceToNow(created)} ago.</p>
+              <p>
+                Posted
+                {formatDistanceToNow(created)}
+                ago.
+              </p>
 
-              <img src={urlImage} alt={`${name} image`} />
+              <img src={urlImage} alt={`${name}`} />
 
               <p>{description}</p>
 
@@ -75,7 +73,7 @@ const Product = () => {
                 ))}
               </ul>
             </div>
-            <aside></aside>
+            <aside />
           </div>
         </div>
       )}

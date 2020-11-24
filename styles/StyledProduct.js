@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { theme } from ".";
-import media from "./media";
-import mixins from "./mixins";
+import styled from 'styled-components';
+import { theme } from '.';
+import media from './media';
+import mixins from './mixins';
 
 const { colors } = theme;
 
@@ -32,9 +32,9 @@ export const StyledWrapper = styled.div`
     `}
   }
 
-  & input[type="text"],
-  & input[type="email"],
-  & input[type="password"],
+  & input[type='text'],
+  & input[type='email'],
+  & input[type='password'],
   & textarea {
     flex: 1;
     padding: 0.5em;

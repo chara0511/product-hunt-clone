@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { theme } from ".";
-import mixins from "./mixins";
+import styled from 'styled-components';
+import { theme } from '.';
+import mixins from './mixins';
 
 const { borderRadius, colors } = theme;
 

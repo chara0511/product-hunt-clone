@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { SearchContext } from "../../context/search/searchContext";
-import { CloseIcon, SearchIcon } from "../icons";
+import React, { useContext, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import { SearchContext } from '../../context/search/searchContext';
+import { CloseIcon, SearchIcon } from '../icons';
 
-import styled from "styled-components";
-import { media, theme } from "../../styles";
+import { media, theme } from '../../styles';
 
-import Link from "next/link";
-import { useOutsideModal } from "../../hooks/useOutsideModal";
+import { useOutsideModal } from '../../hooks/useOutsideModal';
 
 const { colors, fontSizes } = theme;
 
@@ -18,19 +18,18 @@ const StyledForm = styled.form`
     top: 5px;
     left: 5px;
   }
-`;
 
-const StyledInput = styled.input`
-  height: 35px;
-  border: 1px solid ${colors.lavender};
-  padding: 0px 10px 0px 32px;
-  font-size: ${fontSizes.sm};
-  width: 0;
+  & input {
+    height: 35px;
+    border: 1px solid ${colors.lavender};
+    padding: 0px 10px 0px 32px;
+    font-size: ${fontSizes.sm};
+    width: 0;
 
-  ${media.mdTablet`
-  width: 100%;
-
+    ${media.mdTablet`
+      width: 100%;
   `}
+  }
 `;
 
 // Search mode
@@ -91,9 +90,7 @@ const StyledButtonIcon = styled.button`
 `;
 
 const Search = () => {
-  const { searchMode, enableSearchMode, disableSearchMode } = useContext(
-    SearchContext
-  );
+  const { searchMode, enableSearchMode, disableSearchMode } = useContext(SearchContext);
 
   const ref = useRef(null);
 
@@ -110,9 +107,11 @@ const Search = () => {
   return (
     <>
       {!searchMode ? (
-        <StyledForm>
-          <label onClick={enableSearchMode}>
-            <StyledInput
+        <StyledForm onClick={enableSearchMode}>
+          <label htmlFor="search">
+            <input
+              id="search"
+              name="search"
               type="text"
               placeholder="Discover your next favorite thing..."
             />
@@ -127,7 +126,6 @@ const Search = () => {
               ref={wrapperRef}
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log("submitted");
               }}
             >
               <StyledIcon>

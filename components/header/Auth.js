@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import FirebaseContext from "../../context/firebase/FirebaseContext";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import FirebaseContext from '../../context/firebase/FirebaseContext';
 
-import { StyledLink } from "../../styles";
-import { mixins } from "../../styles/index";
+import { StyledLink, mixins } from '../../styles';
 
 const StyledAuthContainer = styled.div`
   display: flex;

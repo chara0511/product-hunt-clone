@@ -1,13 +1,13 @@
-import React, { useContext, useRef } from "react";
-import Link from "next/link";
+import React, { useContext, useRef } from 'react';
+import Link from 'next/link';
 
-import { SearchContext } from "../../context/search/searchContext";
-import { useOutsideModal } from "../../hooks/useOutsideModal";
-import { MoreIcon } from "../icons";
+import styled from 'styled-components';
+import { SearchContext } from '../../context/search/searchContext';
+import { useOutsideModal } from '../../hooks/useOutsideModal';
+import { MoreIcon } from '../icons';
 
-import styled from "styled-components";
-import { theme } from "../../styles";
-import FirebaseContext from "../../context/firebase/FirebaseContext";
+import { theme } from '../../styles';
+import FirebaseContext from '../../context/firebase/FirebaseContext';
 
 const { colors, fontSizes } = theme;
 
@@ -35,7 +35,7 @@ const StyledContainer = styled.div`
   &::before,
   &::after {
     border: solid transparent;
-    content: " ";
+    content: ' ';
     height: 0;
     pointer-events: none;
     position: absolute;
@@ -63,7 +63,7 @@ const Nav = () => {
 
   return (
     <nav>
-      <button onClick={enableModal}>
+      <button type="button" onClick={enableModal}>
         <MoreIcon />
       </button>
 

@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { SearchContext } from "../context/search/searchContext";
+import { useContext, useEffect } from 'react';
+import { SearchContext } from '../context/search/searchContext';
 
 export const useOutsideModal = (ref) => {
   const { disableSearchMode, disableModal } = useContext(SearchContext);
@@ -12,10 +12,10 @@ export const useOutsideModal = (ref) => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
 };

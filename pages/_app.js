@@ -1,16 +1,12 @@
-import { useReducer } from "react";
-import FirebaseContext from "../context/firebase/FirebaseContext";
-import { SearchContext } from "../context/search/searchContext";
-import { SearchReducer } from "../context/search/searchReducer";
-import firebase from "../firebase";
-import useAuth from "../hooks/useAuth";
-import { GlobalStyle } from "../styles";
-import {
-  ENABLE_MODAL,
-  DISABLE_MODAL,
-  ENABLE_SEARCH_MODE,
-  DISABLE_SEARCH_MODE,
-} from "../types";
+import { useReducer } from 'react';
+import PropTypes from 'prop-types';
+import FirebaseContext from '../context/firebase/FirebaseContext';
+import { SearchContext } from '../context/search/searchContext';
+import { SearchReducer } from '../context/search/searchReducer';
+import firebase from '../firebase';
+import useAuth from '../hooks/useAuth';
+import { GlobalStyle } from '../styles';
+import { ENABLE_MODAL, DISABLE_MODAL, ENABLE_SEARCH_MODE, DISABLE_SEARCH_MODE } from '../types';
 
 const MyApp = ({ Component, pageProps }) => {
   const initialState = { productos: [], searchMode: null, modal: null };
@@ -56,5 +52,7 @@ const MyApp = ({ Component, pageProps }) => {
     </>
   );
 };
+
+MyApp.propTypes = { Component: PropTypes.elementType.isRequired, pageProps: PropTypes.object };
 
 export default MyApp;

@@ -1,9 +1,9 @@
-import app from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
+import app from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
 
-import firebaseConfig from "./config";
+import firebaseConfig from './config';
 
 class Firebase {
   constructor() {
@@ -17,12 +17,9 @@ class Firebase {
   }
 
   async signup(name, email, password) {
-    const newUser = await this.auth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
+    const newUser = await this.auth.createUserWithEmailAndPassword(email, password);
 
-    return await newUser.user.updateProfile({ displayName: name });
+    return newUser.user.updateProfile({ displayName: name });
   }
 
   async login(email, password) {

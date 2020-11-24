@@ -1,9 +1,4 @@
-import {
-  ENABLE_MODAL,
-  DISABLE_MODAL,
-  ENABLE_SEARCH_MODE,
-  DISABLE_SEARCH_MODE,
-} from "../../types";
+import { ENABLE_MODAL, DISABLE_MODAL, ENABLE_SEARCH_MODE, DISABLE_SEARCH_MODE } from '../../types';
 
 export const SearchReducer = (state = {}, action) => {
   switch (action.type) {

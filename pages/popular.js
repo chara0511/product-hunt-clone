@@ -1,6 +1,5 @@
-import React from "react";
-import Header from "../components/header/Header";
-import Layout from "../components/layout/Layout";
+import React from 'react';
+import Layout from '../components/layout/Layout';
 
 const Popular = () => {
   return (

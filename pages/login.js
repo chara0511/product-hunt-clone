@@ -1,35 +1,25 @@
-import React, { useState } from "react";
-import Layout from "../components/layout/Layout";
-import { useFormValidation } from "../hooks/useFormValidation";
-import { validateLogin } from "../validations/validateLogin";
-import firebase from "../firebase";
-import Router from "next/router";
-import { ErrorIcon } from "../components/icons";
+import React, { useState } from 'react';
+import Router from 'next/router';
+import Layout from '../components/layout/Layout';
+import { useFormValidation } from '../hooks/useFormValidation';
+import { validateLogin } from '../validations/validateLogin';
+import firebase from '../firebase';
+import { ErrorIcon } from '../components/icons';
 import {
   StyledErrorMessage,
   StyledForm,
   StyledInput,
   StyledTitle,
   StyledWrapper,
-} from "../styles/StyledAuth";
+} from '../styles/StyledAuth';
 
 const initialState = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const Login = () => {
   const [error, setError] = useState(null);
-
-  const successLogin = async () => {
-    try {
-      await firebase.login(email, password);
-
-      Router.push("/");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
 
   const {
     values: { email, password },
@@ -37,7 +27,15 @@ const Login = () => {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useFormValidation(initialState, validateLogin, successLogin);
+  } = useFormValidation(initialState, validateLogin, async () => {
+    try {
+      await firebase.login(email, password);
+
+      Router.push('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  });
 
   return (
     <div>
@@ -46,16 +44,17 @@ const Login = () => {
 
         <StyledForm onSubmit={handleSubmit} noValidate>
           <StyledWrapper>
-            <label htmlFor="email">Email: </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <label htmlFor="email">
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </label>
 
             {errors.email && (
               <StyledErrorMessage>
@@ -67,16 +66,18 @@ const Login = () => {
           </StyledWrapper>
 
           <StyledWrapper>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <label htmlFor="password">
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="on"
+              />
+            </label>
 
             {errors.password && (
               <StyledErrorMessage>
