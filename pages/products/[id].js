@@ -9,6 +9,7 @@ const Product = () => {
   const { firebase, user } = useContext(FirebaseContext);
 
   const [product, setProduct] = useState({});
+  const [comment, setComment] = useState({});
   const [error, setError] = useState(false);
 
   const router = useRouter();
@@ -64,6 +65,27 @@ const Product = () => {
     return setProduct({ ...product, votes: newVotes });
   };
 
+  const handleChangeComment = ({ target }) => {
+    setComment({ ...comment, [target.name]: target.value });
+  };
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      return router.push('/login');
+    }
+
+    comment.uid = user.uid;
+    comment.displayName = user.displayName;
+
+    const newComment = [...comments, comment];
+
+    firebase.db.collection('products').doc(id).update({ comments: newComment });
+
+    return setProduct({ ...product, comments: newComment });
+  };
+
   return (
     <Layout>
       {!Object.keys(product).length || error ? (
@@ -88,24 +110,33 @@ const Product = () => {
               <p>{description}</p>
 
               {user && (
-                <form>
+                <form onSubmit={handleSubmitComment}>
                   <h3>Comment</h3>
 
-                  <input type="text" name="message" placeholder="Write a comment" />
+                  <input
+                    type="text"
+                    name="comment"
+                    placeholder="Write a comment"
+                    onChange={handleChangeComment}
+                  />
                   <input type="submit" value="Done" />
                 </form>
               )}
 
-              <ul>
-                <h3>Comments</h3>
+              {comments.length === 0 ? (
+                <p>No comments</p>
+              ) : (
+                <ul>
+                  <h3>Comments</h3>
 
-                {comments.map((comment) => (
-                  <li>
-                    <p>{comment.name}</p>
-                    <p>{comment.user}</p>
-                  </li>
-                ))}
-              </ul>
+                  {comments.map((comm) => (
+                    <li key={comm.uid}>
+                      <p>{comm.comment}</p>
+                      <p>{comm.displayName}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <aside>
