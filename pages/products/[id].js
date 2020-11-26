@@ -4,6 +4,16 @@ import { formatDistanceToNow } from 'date-fns';
 import FirebaseContext from '../../context/firebase/FirebaseContext';
 import Layout from '../../components/layout/Layout';
 import Error404 from '../../components/layout/404';
+import {
+  StyledProductId,
+  StyledTitle,
+  StyledImage,
+  StyledWrapper,
+  StyledInput,
+  StyledDescription,
+  StyledComments,
+  StyledVotes,
+} from '../../styles/StyledProductId';
 
 const Product = () => {
   const { firebase, user } = useContext(FirebaseContext);
@@ -95,72 +105,98 @@ const Product = () => {
     return setState(true);
   };
 
+  const deleteProduct = () => owner?.uid === user?.uid && true;
+
+  const errorDeleteProduct = (msge) => <p>{msge}</p>;
+
+  const handleDeleteProduct = async () => {
+    if (!user) {
+      return router.push('/login');
+    }
+
+    if (owner.uid !== user.uid) {
+      return router.push('/');
+    }
+
+    try {
+      await firebase.db.collection('products').doc(id).delete();
+    } catch (err) {
+      errorDeleteProduct(err.message);
+    }
+
+    return router.push('/');
+  };
+
   return (
     <Layout>
       {!Object.keys(product).length || error ? (
         <Error404 />
       ) : (
-        <div>
-          <h1>{name}</h1>
-          <div>
-            <div>
-              <p>
-                Posted by
-                {owner.displayName}
-                {`, `}
-                {company}
-                {` - `}
-                {formatDistanceToNow(created)}
-                ago.
-              </p>
+        <StyledProductId>
+          <StyledTitle>
+            <h1>{name}</h1>
 
+            <p>
+              Posted by
+              {owner.displayName}
+              {`, `}
+              {company}
+              {` - `}
+              {formatDistanceToNow(created)}
+              ago.
+            </p>
+          </StyledTitle>
+
+          <StyledWrapper>
+            <StyledImage>
               <img src={urlImage} alt={`${name}`} />
+              <StyledDescription>{description}</StyledDescription>
+            </StyledImage>
+          </StyledWrapper>
 
-              <p>{description}</p>
+          <StyledWrapper>
+            {user && (
+              <form onSubmit={handleSubmitComment}>
+                <h3>Comment</h3>
 
-              {user && (
-                <form onSubmit={handleSubmitComment}>
-                  <h3>Comment</h3>
+                <StyledInput
+                  type="text"
+                  name="comment"
+                  placeholder="Write a comment"
+                  onChange={handleChangeComment}
+                />
 
-                  <input
-                    type="text"
-                    name="comment"
-                    placeholder="Write a comment"
-                    onChange={handleChangeComment}
-                  />
+                <input type="submit" value="Done" />
+              </form>
+            )}
 
-                  <input type="submit" value="Done" />
-                </form>
-              )}
+            {comments.length === 0 ? (
+              <p>No comments</p>
+            ) : (
+              <StyledComments>
+                <h3>Comments</h3>
 
-              {comments.length === 0 ? (
-                <p>No comments</p>
-              ) : (
-                <ul>
-                  <h3>Comments</h3>
+                {comments.map((comm) => (
+                  <li key={comm.posted}>
+                    <p>{comm.comment}</p>
 
-                  {comments.map((comm) => (
-                    <li key={comm.posted}>
-                      <p>{comm.comment}</p>
+                    <p>{comm.displayName}</p>
 
-                      <p>{comm.displayName}</p>
-
-                      {isOwner(comm.uid) && <p>Owner</p>}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+                    {isOwner(comm.uid) && <p>Owner</p>}
+                  </li>
+                ))}
+              </StyledComments>
+            )}
 
             <aside>
               <a target="_blank" rel="noreferrer" href={url}>
                 Visit url
               </a>
 
-              <p>
+              <StyledVotes>
                 {votes}
                 Votes
-              </p>
+              </StyledVotes>
 
               {user && (
                 <button type="button" onClick={handleVote}>
@@ -168,8 +204,14 @@ const Product = () => {
                 </button>
               )}
             </aside>
-          </div>
-        </div>
+
+            {deleteProduct() && (
+              <button type="button" onClick={handleDeleteProduct}>
+                Delete Product
+              </button>
+            )}
+          </StyledWrapper>
+        </StyledProductId>
       )}
     </Layout>
   );
