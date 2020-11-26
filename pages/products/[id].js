@@ -10,6 +10,7 @@ const Product = () => {
 
   const [product, setProduct] = useState({});
   const [comment, setComment] = useState({});
+  const [state, setState] = useState(true);
   const [error, setError] = useState(false);
 
   const router = useRouter();
@@ -23,16 +24,18 @@ const Product = () => {
 
     if (query.exists) {
       setProduct(query.data());
+      setState(false);
     } else {
       setError(true);
+      setState(false);
     }
   };
 
   useEffect(() => {
-    if (id) {
+    if (id && state) {
       getProduct(id);
     }
-  }, [id, product]);
+  }, [id, state]);
 
   const {
     comments,
@@ -52,22 +55,25 @@ const Product = () => {
       return router.push('/login');
     }
 
-    const newVotes = votes + 1;
-
-    if (voted.includes(owner.uid)) {
+    if (voted.includes(user.uid)) {
       return null;
     }
 
-    const userVoted = [...voted, owner.uid];
+    firebase.db
+      .collection('products')
+      .doc(id)
+      .update({ votes: votes + 1, voted: [...voted, user.uid] });
 
-    firebase.db.collection('products').doc(id).update({ votes: newVotes, voted: userVoted });
+    setProduct({ ...product, votes: votes + 1 });
 
-    return setProduct({ ...product, votes: newVotes });
+    return setState(true);
   };
 
   const handleChangeComment = ({ target }) => {
     setComment({ ...comment, [target.name]: target.value });
   };
+
+  const isOwner = (userId) => owner.uid === userId && true;
 
   const handleSubmitComment = (e) => {
     e.preventDefault();
@@ -78,12 +84,15 @@ const Product = () => {
 
     comment.uid = user.uid;
     comment.displayName = user.displayName;
+    comment.posted = Date.now();
 
     const newComment = [...comments, comment];
 
     firebase.db.collection('products').doc(id).update({ comments: newComment });
 
-    return setProduct({ ...product, comments: newComment });
+    setProduct({ ...product, comments: newComment });
+
+    return setState(true);
   };
 
   return (
@@ -119,6 +128,7 @@ const Product = () => {
                     placeholder="Write a comment"
                     onChange={handleChangeComment}
                   />
+
                   <input type="submit" value="Done" />
                 </form>
               )}
@@ -130,9 +140,12 @@ const Product = () => {
                   <h3>Comments</h3>
 
                   {comments.map((comm) => (
-                    <li key={comm.uid}>
+                    <li key={comm.posted}>
                       <p>{comm.comment}</p>
+
                       <p>{comm.displayName}</p>
+
+                      {isOwner(comm.uid) && <p>Owner</p>}
                     </li>
                   ))}
                 </ul>
