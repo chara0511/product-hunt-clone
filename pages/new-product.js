@@ -11,7 +11,6 @@ import {
   StyledErrorMessage,
   StyledForm,
   StyledInput,
-  StyledTitle,
   StyledWrapper,
 } from '../styles/StyledProduct';
 
@@ -91,13 +90,11 @@ const NewProduct = () => {
 
   return (
     <div>
-      <Layout>
+      <Layout title="Add a new Product">
         {!user ? (
           <Error404 />
         ) : (
           <>
-            <StyledTitle>New Product</StyledTitle>
-
             <StyledForm onSubmit={handleSubmit} noValidate>
               <fieldset>
                 <legend>Main Information</legend>

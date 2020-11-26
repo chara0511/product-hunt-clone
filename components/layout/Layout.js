@@ -3,13 +3,27 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Header from '../header/Header';
+import { theme } from '../../styles';
+
+const { fontSizes } = theme;
 
 const StyledMain = styled.main`
-  margin: 20px 0;
+  margin: 20px auto;
   padding: 0 15px;
+  max-width: 1100px;
 `;
 
-const Layout = ({ children }) => {
+const StyledTitle = styled.div`
+  margin-bottom: 10px;
+
+  & span {
+    line-height: 32px;
+    font-size: ${fontSizes.lg};
+    font-weight: 600;
+  }
+`;
+
+const Layout = ({ children, title }) => {
   return (
     <>
       <Head>
@@ -18,13 +32,19 @@ const Layout = ({ children }) => {
 
       <Header />
 
-      <StyledMain>{children}</StyledMain>
+      <StyledMain>
+        <StyledTitle>
+          <span>{title}</span>
+        </StyledTitle>
+        {children}
+      </StyledMain>
     </>
   );
 };
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default Layout;

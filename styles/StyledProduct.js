@@ -3,12 +3,7 @@ import { theme } from '.';
 import media from './media';
 import mixins from './mixins';
 
-const { colors } = theme;
-
-export const StyledTitle = styled.h1`
-  text-align: center;
-  padding: 1.25em 0;
-`;
+const { colors, borderRadius } = theme;
 
 export const StyledForm = styled.form`
   max-width: 375px;
@@ -35,6 +30,8 @@ export const StyledWrapper = styled.div`
     width: 100%;
     padding: 0.5em;
     line-height: 18px;
+    background-color: ${colors.white};
+    border-radius: ${borderRadius};
   }
 `;
 

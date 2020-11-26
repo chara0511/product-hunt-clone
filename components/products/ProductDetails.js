@@ -1,64 +1,60 @@
 import React from 'react';
-import { formatDistanceToNow } from 'date-fns';
-import styled from 'styled-components';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Comment from '../icons/Comment';
 import {
   StyledContent,
+  StyledImage,
   StyledProductDetails,
   StyledWrapper,
   StyledDescription,
   StyledComments,
   StyledVotes,
+  StyledTopic,
+  StyledMeta,
 } from '../../styles/StyledProductDetails';
 
-const StyledImage = styled.img`
-  width: 200px;
-`;
-
 const ProductDetails = ({
-  product: { id, comments, created, description, name, urlImage, votes },
+  product: { id, comments, company, description, name, urlImage, votes },
 }) => {
-  // company
   // url;
 
   return (
     <StyledProductDetails>
       <StyledContent>
-        <div>
-          <StyledImage src={urlImage} alt={`${name} product`} />
-        </div>
+        <StyledImage src={urlImage} alt={`${name} product`} />
 
         <StyledWrapper>
           <StyledDescription>
             <Link href="products/[id]" as={`/products/${id}`}>
-              <h2>{name}</h2>
+              <h3>{name}</h3>
             </Link>
             <p>{description}</p>
           </StyledDescription>
 
-          <StyledComments>
-            <Comment />
-            <p>
-              {comments.length}
-              comments
-            </p>
-          </StyledComments>
+          <StyledMeta>
+            <StyledComments>
+              <span>
+                <Comment />
+                &nbsp;
+                {comments.length}
+              </span>
+            </StyledComments>
 
-          <StyledVotes>
-            <div onClick={() => console.log('clicked')}>
-              <p>
-                {' '}
-                &#9650;
-                {votes}
-              </p>
-            </div>
-
-            <p>{formatDistanceToNow(created)}</p>
-          </StyledVotes>
+            <StyledTopic>
+              <span>{company}</span>
+            </StyledTopic>
+          </StyledMeta>
         </StyledWrapper>
       </StyledContent>
+
+      <StyledVotes>
+        <div onClick={() => console.log('clicked')}>
+          <p>&#9650;</p>
+        </div>
+
+        <p>{votes}</p>
+      </StyledVotes>
     </StyledProductDetails>
   );
 };
