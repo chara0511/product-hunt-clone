@@ -6,14 +6,22 @@ import Layout from '../../components/layout/Layout';
 import Error404 from '../../components/layout/404';
 import {
   StyledProductId,
+  StyledContent,
+  StyledHeaderContent,
   StyledTitle,
+  StyledBodyContent,
   StyledImage,
   StyledWrapper,
   StyledInput,
   StyledDescription,
   StyledComments,
-  StyledVotes,
+  StyledBtnVotes,
+  StyledURLs,
+  StyledOwner,
+  StyledOwnerProfile,
 } from '../../styles/StyledProductId';
+import { StyledLink } from '../../styles';
+import { ArrowRight, Gps } from '../../components/icons';
 
 const Product = () => {
   const { firebase, user } = useContext(FirebaseContext);
@@ -94,6 +102,7 @@ const Product = () => {
 
     comment.uid = user.uid;
     comment.displayName = user.displayName;
+    comment.photoURL = user.photoURL;
     comment.posted = Date.now();
 
     const newComment = [...comments, comment];
@@ -128,89 +137,125 @@ const Product = () => {
   };
 
   return (
-    <Layout>
+    <Layout head={`${name} - ${description}`} title="">
       {!Object.keys(product).length || error ? (
         <Error404 />
       ) : (
         <StyledProductId>
-          <StyledTitle>
-            <h1>{name}</h1>
+          <StyledContent>
+            <StyledHeaderContent>
+              <img src={owner.photoURL} alt={owner.photoURL} />
+              <StyledTitle>
+                <h1>{name}</h1>
 
-            <p>
-              Posted by
-              {owner.displayName}
-              {`, `}
-              {company}
-              {` - `}
-              {formatDistanceToNow(created)}
-              ago.
-            </p>
-          </StyledTitle>
+                <p>{company}</p>
+              </StyledTitle>
+            </StyledHeaderContent>
 
-          <StyledWrapper>
-            <StyledImage>
-              <img src={urlImage} alt={`${name}`} />
-              <StyledDescription>{description}</StyledDescription>
-            </StyledImage>
-          </StyledWrapper>
+            <StyledBodyContent>
+              <StyledWrapper>
+                <StyledImage>
+                  <img src={urlImage} alt={`${name}`} />
+                  <StyledDescription>{description}</StyledDescription>
+                  <p>
+                    Featured
+                    {` `}
+                    {formatDistanceToNow(created)}
+                    ago.
+                  </p>
+                </StyledImage>
+              </StyledWrapper>
 
-          <StyledWrapper>
-            {user && (
-              <form onSubmit={handleSubmitComment}>
-                <h3>Comment</h3>
+              <aside>
+                {!user ? (
+                  <StyledLink href="/login" forwardedAs="/login" chocolate>
+                    &#9650;
+                    <span>{`upvote link ${votes}`}</span>
+                  </StyledLink>
+                ) : (
+                  <StyledBtnVotes type="button" onClick={handleVote}>
+                    <span>
+                      &#9650;
+                      {` upvote link ${votes}`}
+                    </span>
+                  </StyledBtnVotes>
+                )}
 
-                <StyledInput
-                  type="text"
-                  name="comment"
-                  placeholder="Write a comment"
-                  onChange={handleChangeComment}
-                />
+                <hr />
 
-                <input type="submit" value="Done" />
-              </form>
-            )}
+                <div>
+                  <a target="_blank" rel="noreferrer" href={url}>
+                    <StyledURLs>
+                      <Gps />
+                      <div>
+                        <span>Website</span>
+                        <span>{url}</span>
+                      </div>
+                      <ArrowRight />
+                    </StyledURLs>
+                  </a>
+                </div>
 
-            {comments.length === 0 ? (
-              <p>No comments</p>
-            ) : (
-              <StyledComments>
-                <h3>Comments</h3>
+                <hr />
 
-                {comments.map((comm) => (
-                  <li key={comm.posted}>
-                    <p>{comm.comment}</p>
+                <StyledOwner>
+                  <h3>hunter</h3>
+                  <StyledOwnerProfile>
+                    <img src={owner.photoURL} alt={`${owner.displayName} logo`} />
+                    <div>
+                      <h4>{owner.displayName}</h4>
+                      <p>{company}</p>
+                    </div>
+                  </StyledOwnerProfile>
+                  <h3>makers</h3>
+                  <p>no makers</p>
+                </StyledOwner>
+              </aside>
+            </StyledBodyContent>
 
-                    <p>{comm.displayName}</p>
-
-                    {isOwner(comm.uid) && <p>Owner</p>}
-                  </li>
-                ))}
-              </StyledComments>
-            )}
-
-            <aside>
-              <a target="_blank" rel="noreferrer" href={url}>
-                Visit url
-              </a>
-
-              <StyledVotes>
-                {votes}
-                Votes
-              </StyledVotes>
-
+            <StyledWrapper>
               {user && (
-                <button type="button" onClick={handleVote}>
-                  Vote
+                <form onSubmit={handleSubmitComment}>
+                  <h3>Comment</h3>
+
+                  <StyledInput
+                    type="text"
+                    name="comment"
+                    placeholder="Write a comment"
+                    onChange={handleChangeComment}
+                  />
+
+                  <input type="submit" value="Done" />
+                </form>
+              )}
+
+              {comments.length === 0 ? (
+                <p>No comments</p>
+              ) : (
+                <StyledComments>
+                  <h3>Comments</h3>
+
+                  {comments.map((comm) => (
+                    <li key={comm.posted}>
+                      <div>
+                        <img src={comm.photoURL} alt={comm.photoURL} />
+                        <p>{comm.displayName}</p>
+                      </div>
+                      <p>{comm.comment}</p>
+
+                      {isOwner(comm.uid) && <p>Owner</p>}
+                    </li>
+                  ))}
+                </StyledComments>
+              )}
+
+              {deleteProduct() && (
+                <button type="button" onClick={handleDeleteProduct}>
+                  Delete Product
                 </button>
               )}
-            </aside>
-
-            {deleteProduct() && (
-              <button type="button" onClick={handleDeleteProduct}>
-                Delete Product
-              </button>
-            )}
-          </StyledWrapper>
+            </StyledWrapper>
+          </StyledContent>
         </StyledProductId>
       )}
     </Layout>

@@ -1,6 +1,4 @@
 /* eslint-disable max-len */
-import React from 'react';
-
 const Comment = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11">

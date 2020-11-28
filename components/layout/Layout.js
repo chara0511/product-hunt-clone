@@ -23,11 +23,11 @@ const StyledTitle = styled.div`
   }
 `;
 
-const Layout = ({ children, title }) => {
+const Layout = ({ children, head = 'Product Hunt Clone', title }) => {
   return (
     <>
       <Head>
-        <title>Product Hunt Clone</title>
+        <title>{head}</title>
       </Head>
 
       <Header />
@@ -44,6 +44,7 @@ const Layout = ({ children, title }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  head: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 

@@ -50,7 +50,7 @@ const NewProduct = () => {
       created: Date.now(),
       description,
       name,
-      owner: { uid: user.uid, displayName: user.displayName },
+      owner: { uid: user.uid, displayName: user.displayName, photoURL: user.photoURL },
       url,
       urlImage,
       votes: 0,

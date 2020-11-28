@@ -7,7 +7,16 @@ const useAuth = () => {
   useEffect(() => {
     const unsuscribe = firebase.auth.onAuthStateChanged((user) => {
       if (user) {
-        setAuthUser(user);
+        const currentUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          photoURL:
+            user.photoURL ||
+            'https://res.cloudinary.com/dfvra50ch/image/upload/v1606514656/defaultUser_vm0sut.jpg',
+          email: user.email,
+        };
+
+        setAuthUser(currentUser);
       } else {
         setAuthUser(null);
       }

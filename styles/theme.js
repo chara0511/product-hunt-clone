@@ -5,13 +5,16 @@ const theme = {
     chocolate: '#cc4d29',
     black: '#161616',
     gray: '#838383',
+    lightGray: '#d4d4d4',
     lavender: '#e8e8e8',
     firebrick: '#cd0701',
+    darkslategray: 'rgba(0, 0, 0, 0.7)',
   },
 
   shadows: {
     card: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     header: '0 0 2px 2px rgba(232, 232, 232)',
+    url: '0 1px 2px 0 rgba(0,0,0,.05)',
   },
 
   fonts: {

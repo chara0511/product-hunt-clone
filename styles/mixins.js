@@ -70,20 +70,24 @@ const mixins = {
   `,
 
   bigButton: css`
-    color: ${colors.green};
-    background-color: transparent;
-    border: 1px solid ${colors.green};
+    color: ${colors.white};
+    background-color: ${colors.chocolate};
+    border: 1px solid ${colors.chocolate};
     border-radius: ${theme.borderRadius};
-    padding: 1.25rem 1.75rem;
     font-size: ${fontSizes.sm};
-    line-height: 1;
+    font-weight: 600;
+    line-height: 20px;
     text-decoration: none;
+    text-transform: uppercase;
+    width: 160px;
+    height: 48px;
     cursor: pointer;
     transition: ${theme.transition};
+
     &:hover,
     &:focus,
     &:active {
-      background-color: ${colors.transGreen};
+      background-color: ${colors.firebrick};
     }
     &:after {
       display: none !important;
