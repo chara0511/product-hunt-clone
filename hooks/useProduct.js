@@ -6,8 +6,10 @@ const useProduct = (order) => {
 
   const [products, setProducts] = useState([]);
 
-  // Cleanup component
+  // Cleanup component with a flag mounted variable
   useEffect(() => {
+    let mounted = true;
+
     firebase.db
       .collection('products')
       .orderBy(order, 'desc')
@@ -17,8 +19,13 @@ const useProduct = (order) => {
           ...doc.data(),
         }));
 
-        setProducts(firebaseProducts);
+        if (mounted) {
+          setProducts(firebaseProducts);
+        }
       });
+
+    // eslint-disable-next-line no-return-assign
+    return () => (mounted = false);
   }, []);
 
   return { products };

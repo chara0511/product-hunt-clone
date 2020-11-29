@@ -118,16 +118,31 @@ export const StyledImage = styled.div`
   background-color: ${colors.white};
   border-radius: ${borderRadius};
   box-shadow: ${shadows.url};
-  padding: 20px;
+  padding: 10px;
   margin-bottom: 20px;
   box-sizing: border-box;
   max-width: 700px;
 
   & img {
     width: 100%;
-    height: 380px;
+    height: 220px;
     object-fit: cover;
   }
+
+  ${media.mdTablet`
+
+    & img {
+      height: 300px;
+    }
+  `}
+
+  ${media.lgTablet`
+    padding: 20px;
+
+    & img {
+      height: 380px;
+    }
+  `}
 `;
 
 export const StyledDescription = styled.div`
