@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
+import styled from 'styled-components';
 import FirebaseContext from '../../context/firebase/FirebaseContext';
 import Layout from '../../components/layout/Layout';
 import Error404 from '../../components/layout/404';
@@ -21,11 +22,19 @@ import {
   StyledInput,
   StyledDescription,
   StylendSendBtn,
+  StyledNoComments,
   StyledComments,
   StyledComment,
+  StyledDelete,
 } from '../../styles/StyledProductId';
-import { StyledLink } from '../../styles';
+import { mixins, StyledLink } from '../../styles';
 import { ArrowRight, CloseIcon, Gps } from '../../components/icons';
+
+const StyledVotesLink = styled(StyledLink)`
+  ${mixins.bigButton};
+
+  ${mixins.flexCenter};
+`;
 
 const Product = () => {
   const { firebase, user } = useContext(FirebaseContext);
@@ -182,17 +191,19 @@ const Product = () => {
                     Featured
                     {` `}
                     {formatDistanceToNow(created)}
-                    ago.
+                    {` ago.`}
                   </span>
                 </StyledDescription>
               </StyledImage>
 
               <aside>
                 {!user ? (
-                  <StyledLink href="/login" forwardedAs="/login" chocolate>
-                    &#9650;
-                    <span>{`upvote ${votes}`}</span>
-                  </StyledLink>
+                  <StyledVotesLink href="/login" forwardedAs="/login" chocolate>
+                    <span>
+                      &#9650;
+                      {` upvote ${votes}`}
+                    </span>
+                  </StyledVotesLink>
                 ) : (
                   <StyledBtnVotes type="button" onClick={handleVote}>
                     <span>
@@ -258,7 +269,7 @@ const Product = () => {
               <hr />
 
               {comments.length === 0 ? (
-                <p>Add a comment</p>
+                <StyledNoComments>Add a comment</StyledNoComments>
               ) : (
                 <StyledComments>
                   {comments.map((comm) => (
@@ -274,9 +285,9 @@ const Product = () => {
               )}
 
               {deleteProduct() && (
-                <button type="button" onClick={handleDeleteProduct}>
+                <StyledDelete type="button" onClick={handleDeleteProduct}>
                   Delete Product
-                </button>
+                </StyledDelete>
               )}
             </StyledDiscussion>
           </StyledContent>

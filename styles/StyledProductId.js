@@ -11,7 +11,7 @@ export const StyledProductId = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  padding: 100px 16px 32px 16px;
+  padding: 100px 16px 56px 16px;
   background-color: ${colors.darkslategray};
 `;
 
@@ -162,8 +162,9 @@ export const StyledDescription = styled.div`
     border-radius: ${borderRadius};
     border: 1px solid ${colors.lavender};
     padding: 8px 10px;
+    text-align: center;
     display: block;
-    max-width: 130px;
+    max-width: 175px;
     width: 100%;
   }
 `;
@@ -276,6 +277,7 @@ export const StyledInput = styled.input`
   border: 1px solid ${colors.whitesmoke};
   flex: 1;
   padding: 5px 20px 10px 10px;
+  line-height: 16px;
 `;
 
 export const StylendSendBtn = styled.button`
@@ -292,6 +294,12 @@ export const StylendSendBtn = styled.button`
   }
 
   ${mixins.flexCenter};
+`;
+
+export const StyledNoComments = styled.h4`
+  text-align: center;
+  color: ${colors.darkslategray};
+  font-weight: 600;
 `;
 
 export const StyledComments = styled.ul`
@@ -325,5 +333,24 @@ export const StyledComment = styled.div`
     color: ${colors.darkslategray};
     font-weight: 400;
     margin-bottom: 8px;
+  }
+`;
+
+export const StyledDelete = styled.button`
+  position: absolute;
+  z-index: 99;
+  border-radius: 25px 0px 0px 25px;
+  padding: 8px 10px 8px 20px;
+  background-color: ${colors.darkgray};
+  bottom: 12px;
+  right: 0;
+  color: ${colors.lightGray};
+  transition: ${transition};
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: ${colors.white};
+    box-shadow: ${shadows.url};
   }
 `;
