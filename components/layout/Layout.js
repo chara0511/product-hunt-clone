@@ -11,6 +11,8 @@ const StyledMain = styled.main`
   margin: 20px auto;
   padding: 0 15px;
   max-width: 1100px;
+  position: ${({ title }) => (title === 'today' || title === 'popular' ? 'relative' : 'inherit')};
+  z-index: ${({ zindex }) => zindex};
 `;
 
 const StyledTitle = styled.div`
@@ -20,10 +22,11 @@ const StyledTitle = styled.div`
     line-height: 32px;
     font-size: ${fontSizes.lg};
     font-weight: 600;
+    text-transform: capitalize;
   }
 `;
 
-const Layout = ({ children, head = 'Product Hunt Clone', title }) => {
+const Layout = ({ children, head = 'Product Hunt Clone', title, zindex }) => {
   return (
     <>
       <Head>
@@ -32,7 +35,7 @@ const Layout = ({ children, head = 'Product Hunt Clone', title }) => {
 
       <Header />
 
-      <StyledMain>
+      <StyledMain zindex={zindex} title={title}>
         <StyledTitle>
           <span>{title}</span>
         </StyledTitle>
@@ -46,6 +49,7 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
   head: PropTypes.string,
   title: PropTypes.string.isRequired,
+  zindex: PropTypes.string,
 };
 
 export default Layout;

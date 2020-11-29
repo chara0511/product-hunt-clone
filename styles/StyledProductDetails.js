@@ -42,6 +42,7 @@ export const StyledDescription = styled.div`
     font-weight: 600;
     font-variant: tabular-nums;
     cursor: pointer;
+    text-transform: capitalize;
   }
 
   p {

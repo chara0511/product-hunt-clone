@@ -23,10 +23,10 @@ StyledLink.propTypes = {
 };
 
 export default styled(StyledLink)`
-  ${mixins.smallButton}
-
   background-color: ${({ chocolate }) => chocolate && colors.chocolate};
   color: ${({ chocolate }) => chocolate && colors.white};
+
+  ${mixins.smallButton}
 
   :hover {
     background-color: ${({ chocolate }) => chocolate && colors.firebrick};

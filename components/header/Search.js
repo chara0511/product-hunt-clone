@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
+import Router from 'next/router';
 import { SearchContext } from '../../context/search/searchContext';
 import { CloseIcon, SearchIcon } from '../icons';
 
 import { media, theme } from '../../styles';
 
 import { useOutsideModal } from '../../hooks/useOutsideModal';
+import Result from './Result';
 
 const { colors, fontSizes } = theme;
 
@@ -33,7 +34,6 @@ const StyledForm = styled.form`
 `;
 
 // Search mode
-
 const StyledContainer = styled.div`
   position: absolute;
   top: 0;
@@ -50,7 +50,6 @@ const StyledContent = styled.div`
   background-color: ${colors.white};
   height: 46px;
   font-size: ${fontSizes.sm};
-
   z-index: 1;
 `;
 
@@ -91,6 +90,7 @@ const StyledButtonIcon = styled.button`
 
 const Search = () => {
   const { searchMode, enableSearchMode, disableSearchMode } = useContext(SearchContext);
+  const [search, setSearch] = useState({ value: '' });
 
   const ref = useRef(null);
 
@@ -103,6 +103,14 @@ const Search = () => {
   const wrapperRef = useRef(null);
 
   useOutsideModal(wrapperRef);
+
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+
+    if (search.value.trim() === '') return;
+
+    Router.push({ pathname: '/', query: { q: search.value } });
+  };
 
   return (
     <>
@@ -122,12 +130,7 @@ const Search = () => {
       ) : (
         <StyledContainer>
           <StyledContent>
-            <StyledFormActive
-              ref={wrapperRef}
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
+            <StyledFormActive ref={wrapperRef} onSubmit={handleSubmitSearch}>
               <StyledIcon>
                 <SearchIcon />
               </StyledIcon>
@@ -136,13 +139,16 @@ const Search = () => {
                 type="text"
                 placeholder="Discover your next favorite thing..."
                 ref={ref}
+                name="value"
+                value={search.value}
+                onChange={({ target }) => setSearch({ [target.name]: target.value })}
               />
 
               <StyledWrapper>
-                <Link href="/about">Press enter to see all results </Link>
+                {search.value === '' ? <p>Press enter to see results </p> : <Result />}
               </StyledWrapper>
 
-              {/* <input type="submit" value="do it" /> */}
+              <input type="submit" styles={{ display: 'none' }} />
 
               <StyledButtonIcon onClick={disableSearchMode}>
                 <CloseIcon />

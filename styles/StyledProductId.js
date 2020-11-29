@@ -177,6 +177,7 @@ export const StyledBtnVotes = styled.a`
   ${mixins.bigButton};
 
   ${mixins.flexCenter};
+
   ${media.lgTablet`
     position: inherit;
   `}

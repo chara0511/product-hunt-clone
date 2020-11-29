@@ -27,13 +27,29 @@ import {
   StyledComment,
   StyledDelete,
 } from '../../styles/StyledProductId';
-import { mixins, StyledLink } from '../../styles';
+import { media, mixins, StyledLink, theme } from '../../styles';
 import { ArrowRight, CloseIcon, Gps } from '../../components/icons';
 
+const { fontSizes } = theme;
+
 const StyledVotesLink = styled(StyledLink)`
-  ${mixins.bigButton};
+  position: fixed;
+  top: 12px;
+  right: 15px;
+  z-index: 99;
+  font-weight: 600;
+  font-size: ${fontSizes.sm};
+  text-transform: uppercase;
+  width: 160px;
+  height: 48px;
+  padding: 0;
+  border: none;
 
   ${mixins.flexCenter};
+
+  ${media.lgTablet`
+    position: inherit;
+  `}
 `;
 
 const Product = () => {
