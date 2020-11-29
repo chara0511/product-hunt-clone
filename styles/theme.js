@@ -9,6 +9,7 @@ const theme = {
     lavender: '#e8e8e8',
     firebrick: '#cd0701',
     darkslategray: 'rgba(0, 0, 0, 0.7)',
+    darkgray: 'rgba(30,30,30,.5)',
   },
 
   shadows: {

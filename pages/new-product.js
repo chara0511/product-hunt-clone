@@ -50,14 +50,18 @@ const NewProduct = () => {
       created: Date.now(),
       description,
       name,
-      owner: { uid: user.uid, displayName: user.displayName, photoURL: user.photoURL },
+      owner: {
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      },
       url,
       urlImage,
       votes: 0,
       voted: [],
     };
 
-    firebase.db.collection('products').add(product);
+    await firebase.db.collection('products').add(product);
 
     return router.push('/');
   });

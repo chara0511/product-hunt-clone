@@ -6,21 +6,19 @@ const useProduct = (order) => {
 
   const [products, setProducts] = useState([]);
 
-  const handleSnapshot = (snapshot) => {
-    const firebaseProducts = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    setProducts(firebaseProducts);
-  };
-
-  const getProducts = () => {
-    firebase.db.collection('products').orderBy(order, 'desc').onSnapshot(handleSnapshot);
-  };
-
+  // Cleanup component
   useEffect(() => {
-    getProducts();
+    firebase.db
+      .collection('products')
+      .orderBy(order, 'desc')
+      .onSnapshot((snapshot) => {
+        const firebaseProducts = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setProducts(firebaseProducts);
+      });
   }, []);
 
   return { products };

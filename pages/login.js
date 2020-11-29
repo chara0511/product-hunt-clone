@@ -5,13 +5,7 @@ import { useFormValidation } from '../hooks/useFormValidation';
 import { validateLogin } from '../validations/validateLogin';
 import firebase from '../firebase';
 import { ErrorIcon } from '../components/icons';
-import {
-  StyledErrorMessage,
-  StyledForm,
-  StyledInput,
-  StyledTitle,
-  StyledWrapper,
-} from '../styles/StyledAuth';
+import { StyledErrorMessage, StyledForm, StyledInput, StyledWrapper } from '../styles/StyledAuth';
 
 const initialState = {
   email: '',
@@ -39,9 +33,7 @@ const Login = () => {
 
   return (
     <div>
-      <Layout>
-        <StyledTitle>Log in</StyledTitle>
-
+      <Layout title="Log in to Product Hunt">
         <StyledForm onSubmit={handleSubmit} noValidate>
           <StyledWrapper>
             <label htmlFor="email">

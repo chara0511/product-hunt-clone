@@ -2,17 +2,14 @@ import styled from 'styled-components';
 import { theme } from '.';
 import mixins from './mixins';
 
-const { colors } = theme;
-
-export const StyledTitle = styled.h1`
-  text-align: center;
-  padding: 1.25em 0;
-`;
+const { colors, borderRadius } = theme;
 
 export const StyledForm = styled.form`
   max-width: 375px;
   width: 100%;
   margin: 0 auto;
+  border: 1px solid ${colors.lightGray};
+  border-radius: ${borderRadius};
 `;
 
 export const StyledWrapper = styled.div`
@@ -25,6 +22,8 @@ export const StyledWrapper = styled.div`
     width: 100%;
     padding: 0.5em 2.4em;
     line-height: 18px;
+    margin: 0 auto;
+    width: 200px;
   }
 
   input[type='submit'] {
@@ -39,7 +38,8 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledErrorMessage = styled.div`
-  left: 0.5em;
+  width: 200px;
+  left: 25%;
   position: absolute;
   color: ${colors.firebrick};
   display: flex;

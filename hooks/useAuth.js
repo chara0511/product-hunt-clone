@@ -5,7 +5,7 @@ const useAuth = () => {
   const [authUser, setAuthUser] = useState(null);
 
   useEffect(() => {
-    const unsuscribe = firebase.auth.onAuthStateChanged((user) => {
+    const unsuscribe = firebase.auth.onAuthStateChanged(async (user) => {
       if (user) {
         const currentUser = {
           uid: user.uid,

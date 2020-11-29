@@ -1,33 +1,37 @@
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
 import FirebaseContext from '../../context/firebase/FirebaseContext';
 import Layout from '../../components/layout/Layout';
 import Error404 from '../../components/layout/404';
 import {
   StyledProductId,
+  StyledModalClose,
   StyledContent,
   StyledHeaderContent,
   StyledTitle,
   StyledBodyContent,
   StyledImage,
-  StyledWrapper,
-  StyledInput,
-  StyledDescription,
-  StyledComments,
   StyledBtnVotes,
   StyledURLs,
   StyledOwner,
   StyledOwnerProfile,
+  StyledDiscussion,
+  StyledInput,
+  StyledDescription,
+  StylendSendBtn,
+  StyledComments,
+  StyledComment,
 } from '../../styles/StyledProductId';
 import { StyledLink } from '../../styles';
-import { ArrowRight, Gps } from '../../components/icons';
+import { ArrowRight, CloseIcon, Gps } from '../../components/icons';
 
 const Product = () => {
   const { firebase, user } = useContext(FirebaseContext);
 
   const [product, setProduct] = useState({});
-  const [comment, setComment] = useState({});
+  const [comment, setComment] = useState({ comment: '' });
   const [state, setState] = useState(true);
   const [error, setError] = useState(false);
 
@@ -91,7 +95,7 @@ const Product = () => {
     setComment({ ...comment, [target.name]: target.value });
   };
 
-  const isOwner = (userId) => owner.uid === userId && true;
+  const handleResetInput = () => setComment({ comment: '' });
 
   const handleSubmitComment = (e) => {
     e.preventDefault();
@@ -105,11 +109,15 @@ const Product = () => {
     comment.photoURL = user.photoURL;
     comment.posted = Date.now();
 
+    // console.log((comment.company = firebase.db.collection('users').doc(productId).get()));
+
     const newComment = [...comments, comment];
 
     firebase.db.collection('products').doc(id).update({ comments: newComment });
 
     setProduct({ ...product, comments: newComment });
+
+    handleResetInput();
 
     return setState(true);
   };
@@ -142,6 +150,16 @@ const Product = () => {
         <Error404 />
       ) : (
         <StyledProductId>
+          <StyledModalClose>
+            <Link href="/">
+              <a>
+                <span>
+                  <CloseIcon />
+                </span>
+              </a>
+            </Link>
+          </StyledModalClose>
+
           <StyledContent>
             <StyledHeaderContent>
               <img src={owner.photoURL} alt={owner.photoURL} />
@@ -153,30 +171,33 @@ const Product = () => {
             </StyledHeaderContent>
 
             <StyledBodyContent>
-              <StyledWrapper>
-                <StyledImage>
-                  <img src={urlImage} alt={`${name}`} />
-                  <StyledDescription>{description}</StyledDescription>
-                  <p>
+              <StyledImage>
+                <img src={urlImage} alt={`${name}`} />
+
+                <hr />
+
+                <StyledDescription>
+                  <p>{description}</p>
+                  <span>
                     Featured
                     {` `}
                     {formatDistanceToNow(created)}
                     ago.
-                  </p>
-                </StyledImage>
-              </StyledWrapper>
+                  </span>
+                </StyledDescription>
+              </StyledImage>
 
               <aside>
                 {!user ? (
                   <StyledLink href="/login" forwardedAs="/login" chocolate>
                     &#9650;
-                    <span>{`upvote link ${votes}`}</span>
+                    <span>{`upvote ${votes}`}</span>
                   </StyledLink>
                 ) : (
                   <StyledBtnVotes type="button" onClick={handleVote}>
                     <span>
                       &#9650;
-                      {` upvote link ${votes}`}
+                      {` upvote ${votes}`}
                     </span>
                   </StyledBtnVotes>
                 )}
@@ -213,37 +234,40 @@ const Product = () => {
               </aside>
             </StyledBodyContent>
 
-            <StyledWrapper>
-              {user && (
-                <form onSubmit={handleSubmitComment}>
-                  <h3>Comment</h3>
+            <h2>discussion</h2>
 
-                  <StyledInput
-                    type="text"
-                    name="comment"
-                    placeholder="Write a comment"
-                    onChange={handleChangeComment}
-                  />
+            <StyledDiscussion>
+              <form onSubmit={handleSubmitComment}>
+                <StyledInput
+                  type="text"
+                  name="comment"
+                  value={comment.comment}
+                  placeholder="What do you think of this product?"
+                  onChange={handleChangeComment}
+                />
 
-                  <input type="submit" value="Done" />
-                </form>
-              )}
+                {user ? (
+                  <StylendSendBtn type="submit">send</StylendSendBtn>
+                ) : (
+                  <StyledLink href="/login" chocolate>
+                    send
+                  </StyledLink>
+                )}
+              </form>
+
+              <hr />
 
               {comments.length === 0 ? (
-                <p>No comments</p>
+                <p>Add a comment</p>
               ) : (
                 <StyledComments>
-                  <h3>Comments</h3>
-
                   {comments.map((comm) => (
                     <li key={comm.posted}>
-                      <div>
-                        <img src={comm.photoURL} alt={comm.photoURL} />
-                        <p>{comm.displayName}</p>
-                      </div>
-                      <p>{comm.comment}</p>
-
-                      {isOwner(comm.uid) && <p>Owner</p>}
+                      <img src={comm.photoURL} alt={comm.photoURL} />
+                      <StyledComment>
+                        <h3>{comm.displayName}</h3>
+                        <p>{comm.comment}</p>
+                      </StyledComment>
                     </li>
                   ))}
                 </StyledComments>
@@ -254,7 +278,7 @@ const Product = () => {
                   Delete Product
                 </button>
               )}
-            </StyledWrapper>
+            </StyledDiscussion>
           </StyledContent>
         </StyledProductId>
       )}

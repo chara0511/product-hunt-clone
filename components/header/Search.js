@@ -28,7 +28,7 @@ const StyledForm = styled.form`
 
     ${media.mdTablet`
       width: 100%;
-  `}
+    `}
   }
 `;
 

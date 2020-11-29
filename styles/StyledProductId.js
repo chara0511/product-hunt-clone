@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from './media';
 
 import mixins from './mixins';
 import theme from './theme';
@@ -6,13 +7,46 @@ import theme from './theme';
 const { borderRadius, colors, fontSizes, transition, shadows } = theme;
 
 export const StyledProductId = styled.div`
-  border: 2px solid red;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   padding: 100px 16px 32px 16px;
   background-color: ${colors.darkslategray};
+`;
+
+export const StyledModalClose = styled.div`
+  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 49;
+  background-color: ${colors.darkgray};
+
+  & a {
+    position: fixed;
+    z-index: 99;
+    border-radius: 0 25px 25px 0;
+    padding: 8px 10px 8px 20px;
+    background-color: ${colors.darkgray};
+    top: 12px;
+    left: 0;
+  }
+
+  & svg {
+    fill: ${colors.white};
+    display: block;
+  }
+
+  ${media.lgTablet`
+  position: initial;
+  height:0;
+
+    & a {
+    position: absolute;   
+  }
+`}
 `;
 
 export const StyledContent = styled.div`
@@ -22,15 +56,25 @@ export const StyledContent = styled.div`
   max-width: 1100px;
   margin: 0 auto;
 
+  & h2 {
+    font-size: ${fontSizes.sm};
+    line-height: 16px;
+    text-transform: uppercase;
+    color: ${colors.darkslategray};
+    margin: 20px 0;
+  }
+
   & hr {
     border-top: 1px solid ${colors.lavender};
+    border-bottom: none;
+    border-right: none;
     border-left: none;
     margin: 20px 0;
   }
 `;
 
 export const StyledHeaderContent = styled.div`
-  border: 1px solid blue;
+  margin-bottom: 20px;
   ${mixins.flexLeft};
 
   & img {
@@ -56,59 +100,70 @@ export const StyledTitle = styled.div`
 `;
 
 export const StyledBodyContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
-  column-gap: 1em;
+  ${media.lgTablet`
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    column-gap: 1em;
+    `}
 
   & aside {
-    padding: 20px 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: inherit;
   }
 `;
 
 export const StyledImage = styled.div`
   background-color: ${colors.white};
+  border-radius: ${borderRadius};
+  box-shadow: ${shadows.url};
   padding: 20px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  max-width: 700px;
 
   & img {
-    max-width: 700px;
     width: 100%;
     height: 380px;
     object-fit: cover;
   }
 `;
 
-export const StyledWrapper = styled.div`
-  border: 1px solid orange;
+export const StyledDescription = styled.div`
+  max-width: 700px;
 
-  & input[type='submit'] {
+  p {
+    font-size: ${fontSizes.sm};
+    line-height: 20px;
+    margin-bottom: 20px;
+  }
+
+  span {
+    font-size: ${fontSizes.xs};
+    line-height: 16px;
+    text-transform: uppercase;
+    color: ${colors.gray};
+    border-radius: ${borderRadius};
+    border: 1px solid ${colors.lavender};
+    padding: 8px 10px;
     display: block;
-    width: 100px;
-    margin: auto;
+    max-width: 130px;
+    width: 100%;
   }
 `;
 
-export const StyledDescription = styled.p`
-  border: 1px solid brown;
-  max-width: 700px;
-`;
-
-export const StyledInput = styled.input`
-  ${mixins.link}
-`;
-
-export const StyledComments = styled.ul`
-  background-color: ${colors.whitesmoke};
-  border-radius: ${borderRadius};
-  max-width: 150px;
-  width: 100%;
-  padding: 0.25rem 0.5rem;
-  margin: 1rem 0;
-`;
-
 export const StyledBtnVotes = styled.a`
+  position: fixed;
+  top: 12px;
+  right: 15px;
+  z-index: 99;
   ${mixins.bigButton};
 
   ${mixins.flexCenter};
+  ${media.lgTablet`
+    position: inherit;
+  `}
 `;
 
 export const StyledURLs = styled.div`
@@ -176,6 +231,7 @@ export const StyledOwner = styled.div`
 export const StyledOwnerProfile = styled.div`
   & img {
     width: 30px;
+    height: 30px;
     border-radius: 50%;
     margin-right: 8px;
   }
@@ -185,4 +241,74 @@ export const StyledOwnerProfile = styled.div`
   }
 
   ${mixins.flexBetween};
+`;
+
+export const StyledDiscussion = styled.div`
+  border-radius: ${borderRadius};
+  box-shadow: ${shadows.url};
+  padding: 20px;
+  background-color: ${colors.white};
+  max-width: 700px;
+  box-sizing: border-box;
+
+  & form {
+    ${mixins.flexBetween};
+  }
+`;
+
+export const StyledInput = styled.input`
+  border-radius: ${borderRadius};
+  border: 1px solid ${colors.whitesmoke};
+  flex: 1;
+  padding: 5px 20px 10px 10px;
+`;
+
+export const StylendSendBtn = styled.button`
+  ${mixins.smallButton};
+  background-color: ${colors.chocolate};
+  border: 1px solid ${colors.chocolate};
+  color: ${colors.white};
+  margin-left: 1em;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: ${colors.firebrick};
+  }
+
+  ${mixins.flexCenter};
+`;
+
+export const StyledComments = styled.ul`
+  border-radius: ${borderRadius};
+  width: 100%;
+
+  & li {
+    ${mixins.flexLeft};
+    align-items: inherit;
+    margin-bottom: 10px;
+  }
+
+  & img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+`;
+
+export const StyledComment = styled.div`
+  & h3,
+  p {
+    font-size: ${fontSizes.sm};
+    font-weight: 500;
+    line-height: 20px;
+    text-transform: capitalize;
+  }
+
+  & p {
+    color: ${colors.darkslategray};
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
 `;

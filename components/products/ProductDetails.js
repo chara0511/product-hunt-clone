@@ -26,7 +26,7 @@ const ProductDetails = ({
 
         <StyledWrapper>
           <StyledDescription>
-            <Link href="products/[id]" as={`/products/${id}`}>
+            <Link href={`/products/${id}`} as={`/products/${id}`}>
               <h3>{name}</h3>
             </Link>
             <p>{description}</p>
@@ -49,7 +49,7 @@ const ProductDetails = ({
       </StyledContent>
 
       <StyledVotes>
-        <div onClick={() => console.log('clicked')}>
+        <div>
           <p>&#9650;</p>
         </div>
 
