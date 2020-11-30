@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import useProduct from '../../hooks/useProduct';
 import { mixins, theme } from '../../styles';
 
@@ -51,7 +52,7 @@ const StyledResultLink = styled.div`
   }
 `;
 
-const Result = () => {
+const Result = ({ disableSearchMode }) => {
   const { products } = useProduct('votes');
   const [results, setResults] = useState([]);
   const router = useRouter();
@@ -74,7 +75,7 @@ const Result = () => {
           <StyledResult key={result.id}>
             <Link href={`/products/${result.id}`} as={`/products/${result.id}`}>
               <a>
-                <StyledResultLink>
+                <StyledResultLink onClick={disableSearchMode}>
                   <img src={result.urlImage} alt={result.name} />
                   <h3>{result.name}</h3>
                 </StyledResultLink>
@@ -87,4 +88,7 @@ const Result = () => {
   );
 };
 
+Result.propTypes = {
+  disableSearchMode: PropTypes.func.isRequired,
+};
 export default Result;

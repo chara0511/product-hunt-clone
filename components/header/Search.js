@@ -35,21 +35,21 @@ const StyledForm = styled.form`
 
 // Search mode
 const StyledContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  min-height: 100vh;
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
 
 const StyledContent = styled.div`
+  background-color: ${colors.white};
+  font-size: ${fontSizes.sm};
+  height: 46px;
+  position: relative;
   padding: 13px 15px;
   text-align: center;
-  position: relative;
-  background-color: ${colors.white};
-  height: 46px;
-  font-size: ${fontSizes.sm};
   z-index: 1;
 `;
 
@@ -109,7 +109,7 @@ const Search = () => {
 
     if (search.value.trim() === '') return;
 
-    Router.push({ pathname: '/', query: { q: search.value } });
+    Router.push({ query: { q: search.value } });
   };
 
   return (
@@ -141,11 +141,16 @@ const Search = () => {
                 ref={ref}
                 name="value"
                 value={search.value}
+                autoComplete="off"
                 onChange={({ target }) => setSearch({ [target.name]: target.value })}
               />
 
               <StyledWrapper>
-                {search.value === '' ? <p>Press enter to see results </p> : <Result />}
+                {search.value === '' ? (
+                  <p>Press enter to see results </p>
+                ) : (
+                  <Result disableSearchMode={disableSearchMode} />
+                )}
               </StyledWrapper>
 
               <input type="submit" styles={{ display: 'none' }} />
