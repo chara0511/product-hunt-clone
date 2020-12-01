@@ -153,7 +153,7 @@ const Search = () => {
                 )}
               </StyledWrapper>
 
-              <input type="submit" styles={{ display: 'none' }} />
+              <input type="submit" style={{ display: 'none' }} />
 
               <StyledButtonIcon onClick={disableSearchMode}>
                 <CloseIcon />
