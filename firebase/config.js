@@ -1,3 +1,4 @@
+// first deploy in vercel and change this lines for empty
 const firebaseConfig = {
   apiKey: 'AIzaSyCvKiXeXl-GOyHNGypGSMoaECrWTFsRZrw',
   authDomain: 'producthunt-clone-dbbbc.firebaseapp.com',
