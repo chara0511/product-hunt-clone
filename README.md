@@ -2,11 +2,11 @@
 
 <div align="center">
   <h3>
-    <a href="" target="_blank" >
+    <a href="https://product-hunt-clone-0511.netlify.app" target="_blank" >
       Demo
     </a>
     <span> | </span>
-    <a href="https://www.producthunt.com/" target="_blank" >
+    <a href="https://www.producthunt.com" target="_blank" >
       Real page
     </a>
   </h3>

@@ -8,7 +8,7 @@ import { theme } from '../../styles';
 const { fontSizes } = theme;
 
 const StyledMain = styled.main`
-  margin: 20px auto;
+  margin: 30px auto;
   padding: 0 15px;
   max-width: 1100px;
   position: ${({ title }) => (title === 'today' || title === 'popular' ? 'relative' : 'inherit')};

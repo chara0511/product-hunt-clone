@@ -121,6 +121,7 @@ const Search = () => {
               id="search"
               name="search"
               type="text"
+              autoComplete="off"
               placeholder="Discover your next favorite thing..."
             />
 
@@ -147,7 +148,7 @@ const Search = () => {
 
               <StyledWrapper>
                 {search.value === '' ? (
-                  <p>Press enter to see results </p>
+                  <p>Write and press enter to see results </p>
                 ) : (
                   <Result disableSearchMode={disableSearchMode} />
                 )}

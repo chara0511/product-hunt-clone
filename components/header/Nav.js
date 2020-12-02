@@ -29,7 +29,7 @@ const StyledContainer = styled.div`
   }
 
   & li {
-    padding-top: 15px;
+    padding-top: 10px;
   }
 
   &::before,
